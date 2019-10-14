@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.grocerylist.ui.grocerylist.GroceryListFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_grocery_list" />
+
+    <fragment
+        android:id="@+id/nav_share"
+        android:name="com.example.grocerylist.ui.share.ShareFragment"
+        android:label="@string/menu_share"
+        tools:layout="@layout/fragment_share" />
+
+    <fragment
+        android:id="@+id/nav_user_profile"
+        android:name="com.example.grocerylist.ui.user.UserFragment"
+        android:label="@string/menu_user_profile"
+        tools:layout="@layout/fragment_user" />
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.example.grocerylist.ui.settings.SettingsFragment"
+        android:label="@string/menu_tools"
+        tools:layout="@xml/gl_preferences" />
+
+    <fragment
+        android:id="@+id/nav_messages"
+        android:name="com.example.grocerylist.ui.messages.MessagesFragment"
+        android:label="@string/menu_messages"
+        tools:layout="@layout/fragment_messages" />
+
+    <fragment
+        android:id="@+id/nav_list"
+        android:name="com.example.grocerylist.ui.listItems.ListItemsFragment"
+        android:label="@string/menu_send"
+        tools:layout="@layout/fragment_list_items" />
+</navigation>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp" >
+
+    <TextView
+        android:id="@+id/tv_gli_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_gli_due_date_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/due_date"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/tv_gli_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_gli_name" />
+
+    <TextView
+        android:id="@+id/tv_gli_due_date_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@+id/tv_gli_due_date_label"
+        app:layout_constraintTop_toTopOf="@+id/tv_gli_due_date_label" />
+
+    <ImageButton
+        android:id="@+id/ib_share_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/menu_share"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_menu_share" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

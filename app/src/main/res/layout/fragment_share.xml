@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp">
+
+        <Button
+            android:id="@+id/btn_add_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_add"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/et_email_search"
+            app:layout_constraintTop_toTopOf="@+id/et_email_search" />
+
+        <Button
+            android:id="@+id/btn_share_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_share_list"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_share_email_list" />
+
+        <Button
+            android:id="@+id/btn_cancel_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bnt_cancel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_share_list"
+            app:layout_constraintTop_toBottomOf="@+id/rv_share_email_list" />
+
+        <EditText
+            android:id="@+id/et_email_search"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:autofillHints="no"
+            android:hint="@string/email"
+            android:inputType="textWebEmailAddress"
+            app:layout_constraintEnd_toStartOf="@+id/btn_add_email"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dlg_div_two" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dl_item_holder">
+
+            <RadioButton
+                android:id="@+id/rb_gl_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="GL User" />
+
+            <RadioButton
+                android:id="@+id/rb_gl_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Via email" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/tv_dlg_add_user_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Search user by email"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dlg_div_one" />
+
+        <View
+            android:id="@+id/dlg_div_one"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+            tools:layout_editor_absoluteX="-22dp" />
+
+        <View
+            android:id="@+id/dlg_div_two"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintTop_toBottomOf="@+id/tv_dlg_add_user_label"
+            tools:layout_editor_absoluteX="-22dp" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_share_email_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/et_email_search" />
+
+        <include
+            android:id="@+id/dl_item_holder"
+            layout="@layout/rv_gl_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

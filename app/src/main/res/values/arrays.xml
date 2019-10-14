@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="gl_priority">
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
+    </array>
+
+    <array name="unit_measure_imperial">
+        <item>pound</item>
+        <item>ounce</item>
+        <item>piece</item>
+        <item>gallon</item>
+    </array>
+
+    <array name="unit_measure_metric">
+        <item>kg</item>
+        <item>gram</item>
+        <item>piece</item>
+        <item>liter</item>
+    </array>
+</resources>

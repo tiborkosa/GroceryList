@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="show_bass"
+        android:summaryOff="Hidden"
+        android:summaryOn="Not hidden"
+        android:title="Testing" />
+
+    <ListPreference
+        android:defaultValue="some"
+        android:entries="@array/unit_measure_imperial"
+        android:entryValues="@array/unit_measure_imperial"
+        android:key="unit_measurement"
+        android:title="Measurements" />
+</PreferenceScreen>
