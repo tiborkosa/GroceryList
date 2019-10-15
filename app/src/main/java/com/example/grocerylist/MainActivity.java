@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.example.grocerylist.Util.UserUtil;
 import com.example.grocerylist.entities.User;
+import com.example.grocerylist.ui.grocerylist.GroceryListFragment;
 import com.example.grocerylist.ui.user.UserViewModel;
 import com.firebase.ui.auth.AuthUI;
 
@@ -136,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 UserUtil.setUser(user);
                 userViewModel.setUser(user);
                 listRef = FirebaseDatabase.getInstance().getReference(firebaseUser.getUid()+"/my_list");
+                Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.nav_home);
             }
             NavigationView navigationView = findViewById(R.id.nav_view);
             Menu menu = navigationView.getMenu();

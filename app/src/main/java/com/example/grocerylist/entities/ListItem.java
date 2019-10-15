@@ -11,12 +11,12 @@ public final class ListItem {
     public ListItem() {
     }
 
-    public ListItem(String id, String name, double quantity, int measure, int isPurchased) {
+    public ListItem(String id, String name, double quantity, int measure, boolean isPurchased) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
         this.measure = measure;
-        this.isPurchased = isPurchased == 1 ? true : false;
+        this.isPurchased = isPurchased;
     }
 
     public ListItem(String name, double quantity, int measure) {

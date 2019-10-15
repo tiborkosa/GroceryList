@@ -6,34 +6,30 @@
 
     <EditText
         android:id="@+id/tv_dialog_List_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/glist_title_hint"
         android:layout_marginTop="8dp"
+        android:imeOptions = "flagNoFullscreen"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/tv_dialog_date"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="false"
         android:ems="10"
         android:focusable="false"
+        android:imeOptions = "flagNoFullscreen"
         android:hint="@string/dialog_due_date"
         android:inputType="date"
         app:layout_constraintStart_toStartOf="@+id/tv_dialog_List_name"
-        app:layout_constraintTop_toBottomOf="@+id/tv_dialog_List_name" />
-
-    <ImageButton
-        android:id="@+id/ib_calendar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@+id/tv_dialog_List_name"
         app:layout_constraintTop_toBottomOf="@+id/tv_dialog_List_name"
-        app:srcCompat="@android:drawable/ic_menu_my_calendar"
-        android:contentDescription="@string/pick_a_date" />
+        android:autofillHints="@string/dialog_due_date" />
 
     <Spinner
         android:id="@+id/spinner_priority"

@@ -2,15 +2,12 @@ package com.example.grocerylist.ui.dialogs;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -30,36 +27,36 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.example.grocerylist.Util.Constants.DLG_TITLE;
-import static com.example.grocerylist.Util.Constants.DL_IS_EDITED;
 import static com.example.grocerylist.Util.Constants.DL_PRIORITY;
 import static com.example.grocerylist.Util.Constants.GL_DUE_DATE;
 import static com.example.grocerylist.Util.Constants.GL_NAME;
+import static com.example.grocerylist.Util.Constants.GL_POSITION;
 import static com.example.grocerylist.Util.Constants.GROCERY_LIST_ID;
 
 public class NewGroceryListItemDialog extends DialogFragment {
 
+    /**
+     * Interface to be implemented in the calling class.
+     * Will return the edited or new list
+     *  and the edited items's position or -1 if its new
+     */
     public interface DialogSubmitListener {
-        void onDialogSubmit(GroceryList groceryList, boolean isEdited);
+        void onDialogSubmit(GroceryList groceryList, int position);
     }
 
-    @Nullable @BindView(R.id.tv_dialog_List_name) EditText mGLname;
+    @Nullable @BindView(R.id.tv_dialog_List_name) EditText mGLName;
     @Nullable @BindView(R.id.tv_dialog_date) EditText mDueDate;
-    @Nullable @BindView(R.id.ib_calendar) ImageButton mCalendar;
     @Nullable @BindView(R.id.spinner_priority) Spinner mPriority;
-    @Nullable @BindView(R.id.btn_dlg_cancel) Button mCancel;
     @Nullable @BindView(R.id.btn_gl_dialog_submit) Button mSubmit;
 
     private DialogSubmitListener callback;
 
-    public static NewGroceryListItemDialog newInstance(String title, DialogSubmitListener callback){
-        NewGroceryListItemDialog frag = new NewGroceryListItemDialog();
-        frag.callback = callback;
-        Bundle args = new Bundle();
-        args.putString(DLG_TITLE, title);
-        frag.setArguments(args);
-        return frag;
-    }
-
+    /**
+     * New instance of the class to set up the callback function and arguments
+     * @param args the dialog information (title and data of the editable item)
+     * @param callback function of the parent
+     * @return new instance of the fragment
+     */
     public static NewGroceryListItemDialog newInstance(Bundle args, DialogSubmitListener callback){
         NewGroceryListItemDialog frag = new NewGroceryListItemDialog();
         frag.callback = callback;
@@ -71,9 +68,7 @@ public class NewGroceryListItemDialog extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dialog_new_gl,null);
-        if(callback == null || !(callback instanceof DialogSubmitListener)){
-            throw new UnsupportedOperationException("DialogSubmitListener.onDialogSubmit is not implemented");
-        }
+        //setStyle(DialogFragment.STYLE_NORMAL, 0);
         ButterKnife.bind(this, view);
         return view;
     }
@@ -85,22 +80,33 @@ public class NewGroceryListItemDialog extends DialogFragment {
         getDialog().setTitle(getArguments().getString(DLG_TITLE, "Dialog"));
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
-        mGLname.setText(getArguments().getString(GL_NAME, ""));
+        mGLName.setText(getArguments().getString(GL_NAME, ""));
         mDueDate.setText(getArguments().getString(GL_DUE_DATE, ""));
         int priority = getArguments().getInt(DL_PRIORITY,0);
         mPriority.setSelection(priority);
+        if(getArguments().containsKey(GL_POSITION)){
+            mSubmit.setText("Edit");
+        }
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //getDialog().getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
     @Nullable @OnClick(R.id.btn_gl_dialog_submit)
     public void onAddNewGLItem(){
-        boolean isEdited = getArguments().getBoolean(DL_IS_EDITED, false);
-        String listName = mGLname.getText().toString();
+        String listName = mGLName.getText().toString();
         String dueDate = mDueDate.getText().toString();
         String[] priorities = getResources().getStringArray(R.array.gl_priority);
         String priorityString = mPriority.getSelectedItem().toString();
         int idx = 0;
         if(priorities != null) {
             idx = Arrays.asList(priorities).indexOf(priorityString);
+            // in case index was not found
+            idx = idx == -1 ? 0 : idx;
         }
         if(listName.trim().isEmpty()){
             Snackbar.make(getView(), "List title cannot be empty", Snackbar.LENGTH_LONG).show();
@@ -112,7 +118,7 @@ public class NewGroceryListItemDialog extends DialogFragment {
             if(getArguments().containsKey(GROCERY_LIST_ID)) {
                 groceryList.setId(getArguments().getString(GROCERY_LIST_ID));
             }
-            listener.onDialogSubmit(groceryList, isEdited);
+            listener.onDialogSubmit(groceryList, getArguments().getInt(GL_POSITION,-1));
             dismiss();
         }
     }
@@ -122,27 +128,23 @@ public class NewGroceryListItemDialog extends DialogFragment {
         dismiss();
     }
 
-    @Nullable @OnClick(R.id.ib_calendar)
+    @Nullable @OnClick(R.id.tv_dialog_date)
     public void onOpenCalendar(){
         Calendar calendar = MyDateFormat.getDateNow(Calendar.getInstance().getTime());
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH);
         int year = calendar.get(Calendar.YEAR);
         if(getArguments() != null && getArguments().containsKey(GL_DUE_DATE)){
-            // TODO: split up the string or whatever to show correct date
             Calendar dueDate = MyDateFormat.getDate(getArguments().getString(GL_DUE_DATE));
             day = dueDate.get(Calendar.DAY_OF_MONTH);
             month = dueDate.get(Calendar.MONTH);
             year = dueDate.get(Calendar.YEAR);
         }
 
-        Log.d("DATA_DATE", "day: " + day +" month: " + month + " year: " + year);
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), R.style.datepicker, new DatePickerDialog.OnDateSetListener() {
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Calendar d = Calendar.getInstance();
-                d.set(year,monthOfYear,dayOfMonth);
-                mDueDate.setText(MyDateFormat.getDate(d));
-            }
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), R.style.datepicker, (view, year1, monthOfYear, dayOfMonth) -> {
+            Calendar d = Calendar.getInstance();
+            d.set(year1,monthOfYear,dayOfMonth);
+            mDueDate.setText(MyDateFormat.getDate(d));
         }, year, month, day);
         datePickerDialog.show();
     }

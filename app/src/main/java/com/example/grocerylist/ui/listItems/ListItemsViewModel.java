@@ -31,6 +31,7 @@ public class ListItemsViewModel extends ViewModel {
     public ListItemsViewModel(Bundle arg) {
         String pID = arg.getString(GROCERY_LIST_ID, "");
         List_Items_Ref = FirebaseDatabase.getInstance().getReference("/g_list_items/"+pID);
+        Log.d(TAG, "id is: "+ pID);
 
         mListItems = new MutableLiveData<>();
         List_Items_Ref
@@ -51,6 +52,12 @@ public class ListItemsViewModel extends ViewModel {
                 Log.d(TAG, "Error while retrieving list" + databaseError.getMessage());
             }
         });
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        List_Items_Ref = null;
     }
 
     public static void addNewItem(ListItem item){

@@ -25,7 +25,7 @@
     <string name="grocery_list_title">Grocery List Title</string>
     <string name="gl_dialog_title">Title</string>
     <string name="bnt_cancel">Cancel</string>
-    <string name="glist_title_hint">Your grocery list title</string>
+    <string name="glist_title_hint">Enter list name</string>
     <string name="pick_a_date">Pick a date</string>
     <string name="amount">Amount:</string>
     <string name="quantity">Quantity</string>
@@ -37,5 +37,6 @@
     <string name="btn_share_list">Send</string>
     <string name="delete_item">Delete Item</string>
     <string name="email">email</string>
+    <string name="gl_no_list_items">No items added yet.</string>
 
 </resources>

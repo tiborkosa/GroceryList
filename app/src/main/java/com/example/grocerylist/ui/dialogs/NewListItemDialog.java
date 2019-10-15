@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -14,7 +15,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.grocerylist.R;
-import com.example.grocerylist.Util.DoubleTextWatcher;
 import com.example.grocerylist.entities.ListItem;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -39,19 +39,12 @@ public class NewListItemDialog extends DialogFragment {
     @BindView(R.id.tv_dlg_item_name) EditText mListItemName;
     @Nullable @BindView(R.id.tv_dialog_qty) EditText mQuantity;
     @Nullable @BindView(R.id.spinner_dlg_unit) Spinner mMeasureUnit;
+    @Nullable @BindView(R.id.btn_dlg_add)
+    Button mSubmit;
 
-    private NewListItemDialog.DialogSubmitListener callback;
+    private DialogSubmitListener callback;
 
-    public static NewListItemDialog newInstance(String title, NewListItemDialog.DialogSubmitListener callback){
-        NewListItemDialog frag = new NewListItemDialog();
-        frag.callback = callback;
-        Bundle args = new Bundle();
-        args.putString(DLG_TITLE, title);
-        frag.setArguments(args);
-        return frag;
-    }
-
-    public static NewListItemDialog newInstance(Bundle args, NewListItemDialog.DialogSubmitListener callback){
+    public static NewListItemDialog newInstance(Bundle args, DialogSubmitListener callback){
         NewListItemDialog frag = new NewListItemDialog();
         frag.callback = callback;
         frag.setArguments(args);
@@ -62,13 +55,8 @@ public class NewListItemDialog extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dialog_new_gl_item,null);
-        if(callback == null || !(callback instanceof NewListItemDialog.DialogSubmitListener)){
-            throw new UnsupportedOperationException("NewListItemDialog.onDialogSubmit is not implemented");
-        }
         ButterKnife.bind(this, view);
 
-        // Adding text listener to allow only double entries
-        mQuantity.addTextChangedListener( new DoubleTextWatcher(mQuantity));
         return view;
     }
 
@@ -84,6 +72,10 @@ public class NewListItemDialog extends DialogFragment {
         if(q != 0)
             mQuantity.setText(String.valueOf(q));
         mMeasureUnit.setSelection(getArguments().getInt(ITEM_UNIT_OF_MEASURE,0));
+
+        if(getArguments().containsKey(ITEM_POSITION)){
+            mSubmit.setText("Edit");
+        }
     }
 
     @Nullable @OnClick(R.id.btn_dlg_add)
@@ -96,16 +88,20 @@ public class NewListItemDialog extends DialogFragment {
             m = Double.parseDouble(quantity);
         } catch (Exception e){
             Log.e("RR", "error parsing " + e.getMessage());
+            return;
         }
 
         if(itemName.trim().isEmpty()){
-            Snackbar.make(getView(), "List name cannot be empty", Snackbar.LENGTH_LONG).show();
+            displaySnackBar("List name cannot be empty");
         } else if(quantity.trim().isEmpty()){
-            Snackbar.make(getView(), "Quantity is not set!", Snackbar.LENGTH_LONG).show();
+            displaySnackBar("Quantity is not set!");
         } else {
             ListItem listItem = new ListItem(itemName, m, measure);
             listItem.setId(getArguments().getString(ITEM_ID, null));
-            callback.onDialogSubmit(listItem, getArguments().getInt(ITEM_POSITION));
+            int position = getArguments()
+                    .containsKey(ITEM_POSITION) ? getArguments().getInt(ITEM_POSITION) : -1;
+            DialogSubmitListener listener = (DialogSubmitListener) getTargetFragment();
+            listener.onDialogSubmit(listItem, position);
             dismiss();
         }
     }
@@ -113,6 +109,10 @@ public class NewListItemDialog extends DialogFragment {
     @Nullable @OnClick(R.id.btn_dlg_cancel)
     public void onCancelDialog(){
         dismiss();
+    }
+
+    private void displaySnackBar(String message){
+        Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
     }
 
 }

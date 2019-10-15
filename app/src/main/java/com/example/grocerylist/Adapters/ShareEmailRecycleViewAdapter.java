@@ -18,6 +18,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * Recycler view adapter for displaying the list of user emails to share the list with
+ */
 public class ShareEmailRecycleViewAdapter extends RecyclerView.Adapter<ShareEmailRecycleViewAdapter.ListItemsHolder> {
 
     private final List<String> mListItems;
@@ -25,10 +28,19 @@ public class ShareEmailRecycleViewAdapter extends RecyclerView.Adapter<ShareEmai
     private OnItemClicked mCallback;
     private static final String TAG = ShareEmailRecycleViewAdapter.class.getSimpleName();
 
+    /**
+     * On click interface to be implemented in the calling class
+     * This is used if we want to remove an item
+     */
     public interface OnItemClicked {
         void onDeleteItem(int position);
     }
 
+    /**
+     * Constructor to set up the data
+     * @param emailList array list to be displayed
+     * @param callback of the item clicked
+     */
     public ShareEmailRecycleViewAdapter(List<String> emailList, OnItemClicked callback ){
 
         mListItems = emailList;
@@ -40,6 +52,10 @@ public class ShareEmailRecycleViewAdapter extends RecyclerView.Adapter<ShareEmai
         mCallback = callback;
     }
 
+    /**
+     * Cleaning up the listener
+     * @param holder
+     */
     @Override
     public void onViewDetachedFromWindow(@NonNull ListItemsHolder holder) {
         super.onViewDetachedFromWindow(holder);
@@ -47,6 +63,12 @@ public class ShareEmailRecycleViewAdapter extends RecyclerView.Adapter<ShareEmai
         mCallback = null;
     }
 
+    /**
+     * Create the view holder and inflate the item res file
+     * @param parent where we want to inflate the items
+     * @param viewType
+     * @return a new view holder
+     */
     @NonNull
     @Override
     public ListItemsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -58,30 +80,53 @@ public class ShareEmailRecycleViewAdapter extends RecyclerView.Adapter<ShareEmai
         return new ListItemsHolder(view);
     }
 
+    /**
+     * Binding the data to the views
+     * @param holder parent holder
+     * @param position position of the item to be bind
+     */
     @Override
     public void onBindViewHolder(@NonNull ListItemsHolder holder, int position) {
         holder.bind(mListItems.get(position));
     }
 
+    /**
+     * The count of the item in the list
+     * @return number if elements in the list
+     */
     @Override
     public int getItemCount() {
         return mNumberOfItems;
     }
 
+    /**
+     * View holder class
+     */
     class ListItemsHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.tv_rv_email) TextView mEmail;
 
-
+        /**
+         * Constructor of the view holder
+         * @param view of the element
+         */
         public ListItemsHolder(View view){
             super(view);
             ButterKnife.bind(this, view);
         }
 
+        /**
+         * Binding the data to the view
+         * @param email data
+         */
         private void bind(String email){
             mEmail.setText(email);
         }
 
+        /**
+         * Icon clicked listener and setting up the callback
+         * @param v that was clicked
+         */
         @OnClick(R.id.rv_delete_email)
         public void onEmailDeleted(View v){
             ImageButton img_btn = (ImageButton) v;

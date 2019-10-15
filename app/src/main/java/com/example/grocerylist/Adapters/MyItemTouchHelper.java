@@ -15,6 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.grocerylist.R;
 import com.example.grocerylist.Util.MyApplication;
 
+/**
+ * Helper class to perform left and right swipe on the recycler view
+ */
 public class MyItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 
     private static final String TAG = MyItemTouchHelper.class.getSimpleName();
@@ -22,21 +25,41 @@ public class MyItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     private ColorDrawable background;
     private OnItemTouchActionListener mCallback;
 
+    /**
+     * Interfaces to be implemented in the calling class
+     * Both will return the position of the recycler view where the action was performed
+     */
     public interface OnItemTouchActionListener {
         void onLeftSwipe(int position);
         void onRightSwipe(int position);
     }
 
+    /**
+     * Constructor to set up the listeners and the swipe directions
+     * @param listener of the implemented interface
+     */
     public MyItemTouchHelper(OnItemTouchActionListener listener) {
         super(0, ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT);
         mCallback = listener;
     }
 
+    /**
+     * Not used
+     * @param recyclerView
+     * @param viewHolder
+     * @param target
+     * @return
+     */
     @Override
     public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
         return false;
     }
 
+    /**
+     * Setting up the callback depending of the swipe
+     * @param viewHolder of the item swiped
+     * @param direction of the item swiped
+     */
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         if(direction == ItemTouchHelper.LEFT){
@@ -48,11 +71,26 @@ public class MyItemTouchHelper extends ItemTouchHelper.SimpleCallback {
         }
     }
 
+    /**
+     * Not needed
+     * @return
+     */
     @Override
     public boolean isLongPressDragEnabled() {
         return false;
     }
 
+    /**
+     * This is needed to show the background after the swipe happened
+     * We are adding the icons and the background color
+     * @param c canvas to be drawn on
+     * @param recyclerView container
+     * @param viewHolder that was swiped
+     * @param dX x coordinated
+     * @param dY y coordinates
+     * @param actionState
+     * @param isCurrentlyActive
+     */
     @Override
     public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
 
