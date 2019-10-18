@@ -42,7 +42,7 @@ public class ShareEmailRecycleViewAdapter extends RecyclerView.Adapter<ShareEmai
      * @param callback of the item clicked
      */
     public ShareEmailRecycleViewAdapter(List<String> emailList, OnItemClicked callback ){
-
+        Log.d(TAG, "ShareEmailRecycleViewAdapter");
         mListItems = emailList;
         int size = 0;
         if(emailList != null){
@@ -50,17 +50,6 @@ public class ShareEmailRecycleViewAdapter extends RecyclerView.Adapter<ShareEmai
         }
         mNumberOfItems = size;
         mCallback = callback;
-    }
-
-    /**
-     * Cleaning up the listener
-     * @param holder
-     */
-    @Override
-    public void onViewDetachedFromWindow(@NonNull ListItemsHolder holder) {
-        super.onViewDetachedFromWindow(holder);
-        Log.d(TAG, "detached called here");
-        mCallback = null;
     }
 
     /**

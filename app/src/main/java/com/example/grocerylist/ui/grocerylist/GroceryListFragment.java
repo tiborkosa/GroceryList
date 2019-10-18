@@ -58,7 +58,7 @@ public class GroceryListFragment
     @BindView(R.id.tv_no_gl_items) TextView mNoItems;
 
     private static GroceryListViewModel viewModel;
-    private List<GroceryList> gList;
+    private List<GroceryList> gList = new ArrayList<>();
     private View root;
 
     private static final String TAG = GroceryListFragment.class.getSimpleName();
@@ -226,6 +226,7 @@ public class GroceryListFragment
         args.putInt(GL_POSITION,position);
 
         openGLDialog(args);
+        recyclerView.getAdapter().notifyItemChanged(position);
     }
 
     /**

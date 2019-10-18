@@ -1,12 +1,13 @@
 package com.example.grocerylist;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.grocerylist.Util.UserUtil;
 import com.example.grocerylist.entities.User;
-import com.example.grocerylist.ui.grocerylist.GroceryListFragment;
 import com.example.grocerylist.ui.user.UserViewModel;
 import com.firebase.ui.auth.AuthUI;
 
@@ -31,6 +32,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -38,12 +41,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+import timber.log.Timber;
 
 import static com.example.grocerylist.ui.grocerylist.GroceryListViewModel.listRef;
 
@@ -86,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         userViewModel.getUser().observe(this, user -> {
-            Log.d(TAG, "Logged user is:" + user.toString());
+            Timber.d("Logged user is:" + user.toString());
             updateNavigationUser(user);
         });
 
@@ -96,7 +101,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigation = findViewById(R.id.nav_view);
         View headerView = navigation.getHeaderView(0);
         TextView mNavUserName = headerView.findViewById(R.id.nav_header_name);
+        TextView mNavUserEmail = headerView.findViewById(R.id.tv_header_email);
+        ImageView mProfileImage = headerView.findViewById(R.id.iv_header_img);
+        if(user.getImage() != null){
+            Picasso.get().load(user.getImage()).into(new Target(){
+
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    mProfileImage.setImageBitmap(bitmap);
+                }
+
+                @Override
+                public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+                }
+
+                @Override
+                public void onPrepareLoad(final Drawable placeHolderDrawable) {
+                    Timber.d("Prepare Load");
+                }
+            });
+        }
+        if(user.getEmail() != null){
+            mNavUserEmail.setText(user.getEmail());
+        }
         mNavUserName.setText(user.getName());
+
     }
 
     @Override
@@ -114,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d(TAG, "this is the requestCode: " + requestCode);
+        Timber.d( "this is the requestCode: " + requestCode);
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -148,13 +178,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main_grocery, menu);
-        return true;
-    }
-
-    @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
@@ -166,18 +189,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (menuItem.getItemId()){
             case R.id.nav_home:
                 Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.nav_home);
-                Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_LONG);
                 break;
             case R.id.nav_user_profile:
-                Toast.makeText(getApplicationContext(), "User Profile", Toast.LENGTH_LONG);
                 Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.nav_user_profile);
                 break;
             case R.id.nav_settings:
-                Toast.makeText(getApplicationContext(), "Settings", Toast.LENGTH_LONG);
                 Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.nav_settings);
                 break;
             case R.id.nav_messages:
-                Toast.makeText(getApplicationContext(), "Messages", Toast.LENGTH_LONG);
                 Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.nav_messages);
                 break;
             case R.id.nav_authenticate:
@@ -223,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.d(TAG, "Could not get old data.");
+                Timber.d("Could not get old data.");
             }
         });
     }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,21 +9,144 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp">
 
+        <TextView
+            android:id="@+id/list_item_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:paddingLeft="8dp"
+            android:paddingRight="0dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold|italic"
+            android:text="@string/shared_list"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RelativeLayout
+            android:id="@+id/dl_item_holder"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corner_bg"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/list_item_label">
+
+            <include
+                layout="@layout/rv_gl_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_share_method_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="@string/sharing_methods"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold|italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dl_item_holder" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_share_method_label">
+
+            <RadioButton
+                android:id="@+id/rb_gl_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:textSize="16sp"
+                android:layout_marginRight="16dp"
+                android:text="@string/grocery_user" />
+
+            <RadioButton
+                android:id="@+id/rb_gl_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="@string/Email" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/tv_dlg_add_user_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/add_users"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold|italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+        <View
+            android:id="@+id/v_line"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimaryDark"
+            app:layout_constraintTop_toBottomOf="@+id/tv_dlg_add_user_label"/>
+
+        <EditText
+            android:id="@+id/et_email_search"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:autofillHints="no"
+            android:imeOptions = "flagNoFullscreen"
+            android:hint="@string/email"
+            android:inputType="textWebEmailAddress"
+            app:layout_constraintEnd_toStartOf="@+id/btn_add_email"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/v_line" />
+
         <Button
             android:id="@+id/btn_add_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/btn_add"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/et_email_search"
             app:layout_constraintTop_toTopOf="@+id/et_email_search" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_share_email_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_share_list"
+            app:layout_constraintTop_toBottomOf="@+id/et_email_search" />
+
         <Button
             android:id="@+id/btn_share_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
             android:text="@string/btn_share_list"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            style="@style/Widget.AppCompat.Button.Borderless"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rv_share_email_list" />
@@ -34,91 +156,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/bnt_cancel"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_share_list"
-            app:layout_constraintTop_toBottomOf="@+id/rv_share_email_list" />
-
-        <EditText
-            android:id="@+id/et_email_search"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:autofillHints="no"
-            android:hint="@string/email"
-            android:inputType="textWebEmailAddress"
-            app:layout_constraintEnd_toStartOf="@+id/btn_add_email"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dlg_div_two" />
-
-        <RadioGroup
-            android:id="@+id/radioGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dl_item_holder">
-
-            <RadioButton
-                android:id="@+id/rb_gl_user"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="GL User" />
-
-            <RadioButton
-                android:id="@+id/rb_gl_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Via email" />
-
-        </RadioGroup>
-
-        <TextView
-            android:id="@+id/tv_dlg_add_user_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Search user by email"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dlg_div_one" />
-
-        <View
-            android:id="@+id/dlg_div_one"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="8dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroup"
-            tools:layout_editor_absoluteX="-22dp" />
-
-        <View
-            android:id="@+id/dlg_div_two"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="8dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintTop_toBottomOf="@+id/tv_dlg_add_user_label"
-            tools:layout_editor_absoluteX="-22dp" />
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_share_email_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/et_email_search" />
-
-        <include
-            android:id="@+id/dl_item_holder"
-            layout="@layout/rv_gl_item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toStartOf="@+id/btn_share_list" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

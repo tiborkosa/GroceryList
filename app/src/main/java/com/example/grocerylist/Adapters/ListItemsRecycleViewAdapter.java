@@ -48,7 +48,6 @@ public class ListItemsRecycleViewAdapter extends RecyclerView.Adapter<ListItemsR
      * @param callback of the item clicked
      */
     public ListItemsRecycleViewAdapter(List<ListItem> listItems, OnItemClicked callback ){
-
         mListItems = listItems;
         int size = 0;
         if(listItems != null){
@@ -56,17 +55,6 @@ public class ListItemsRecycleViewAdapter extends RecyclerView.Adapter<ListItemsR
         }
         mNumberOfItems = size;
         mCallback = callback;
-    }
-
-    /**
-     * Cleaning up the listener
-     * @param holder
-     */
-    @Override
-    public void onViewDetachedFromWindow(@NonNull ListItemsHolder holder) {
-        super.onViewDetachedFromWindow(holder);
-        Log.d(TAG, "detached called here");
-        mCallback = null;
     }
 
     /**

@@ -101,11 +101,11 @@ public class MyItemTouchHelper extends ItemTouchHelper.SimpleCallback {
         background = new ColorDrawable(Color.TRANSPARENT);
 
         if(dX > 0){
-            background = new ColorDrawable(Color.GREEN);
+            background = new ColorDrawable(MyApplication.getAppContext().getResources().getColor(R.color.colorPrimary));
         } else if(dX < 0){
             icon = ContextCompat.getDrawable(MyApplication.getAppContext(),
                     R.drawable.ic_delete_24px);
-            background = new ColorDrawable(Color.RED);
+            background = new ColorDrawable(MyApplication.getAppContext().getResources().getColor(R.color.darkRed));
         }
 
         int top = itemView.getTop() + (itemView.getHeight() - icon.getIntrinsicHeight()) / 2;
@@ -114,19 +114,19 @@ public class MyItemTouchHelper extends ItemTouchHelper.SimpleCallback {
         int bottom = top + icon.getIntrinsicHeight();
 
         if (dX > 0 && isCurrentlyActive) { // Swiping to the right
-            icon.setBounds(20, top, icon.getIntrinsicWidth()+20, bottom);
+            icon.setBounds(40, top, icon.getIntrinsicWidth()+40, bottom);
             background.setBounds(itemView.getLeft(), itemView.getTop(),
-                    itemView.getLeft() + ((int) dX) + backgroundCornerOffset - 40, itemView.getBottom());
-        } else if (dX < 0) { // Swiping to the left
+                    itemView.getLeft() + ((int) dX) + backgroundCornerOffset - 20, itemView.getBottom());
+        } else if (dX < 0 && isCurrentlyActive) { // Swiping to the left
             icon.setBounds(left, top, right, bottom);
-            background.setBounds(itemView.getRight() + ((int) dX) - backgroundCornerOffset,
+            background.setBounds(itemView.getRight()+ 20 + ((int) dX) - backgroundCornerOffset,
                     itemView.getTop(), itemView.getRight(), itemView.getBottom());
         } else { // view is unSwiped
             background.setBounds(0, 0, 0, 0);
         }
 
         background.draw(c);
-        if(dX < -icon.getIntrinsicHeight() || dX > (icon.getIntrinsicHeight()+40)) icon.draw(c);
+        if(dX < -icon.getIntrinsicHeight() || dX > (icon.getIntrinsicHeight()+20)) icon.draw(c);
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
     }
 }

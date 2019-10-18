@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="show_bass"
-        android:summaryOff="Hidden"
-        android:summaryOn="Not hidden"
-        android:title="Testing" />
+        android:defaultValue="false"
+        android:key="@string/pref_noti_key"
+        android:summaryOff="@string/pref_noti_summ_off"
+        android:summaryOn="@string/pref_noti_summ_on"
+        android:title="@string/pref_noti_title" />
 
     <ListPreference
-        android:defaultValue="some"
-        android:entries="@array/unit_measure_imperial"
-        android:entryValues="@array/unit_measure_imperial"
-        android:key="unit_measurement"
-        android:title="Measurements" />
+        android:defaultValue="@string/pref_met_ent"
+        android:entries="@array/pref_measure_entries"
+        android:entryValues="@array/pref_measure_values"
+        android:key="@string/pref_measure_key"
+        android:title="@string/pref_measure_title" />
 </PreferenceScreen>

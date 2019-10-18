@@ -68,8 +68,9 @@ public class NewGroceryListItemDialog extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dialog_new_gl,null);
-        //setStyle(DialogFragment.STYLE_NORMAL, 0);
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.dialog);
         ButterKnife.bind(this, view);
+
         return view;
     }
 

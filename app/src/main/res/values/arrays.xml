@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="gl_priority">
-        <item>Low</item>
-        <item>Medium</item>
-        <item>High</item>
+        <item>@string/prio_low</item>
+        <item>@string/prio_med</item>
+        <item>@string/prio_high</item>
     </array>
 
     <array name="unit_measure_imperial">
-        <item>pound</item>
-        <item>ounce</item>
-        <item>piece</item>
-        <item>gallon</item>
+        <item>@string/pound</item>
+        <item>@string/ounce</item>
+        <item>@string/piece</item>
+        <item>@string/gallon</item>
     </array>
 
     <array name="unit_measure_metric">
-        <item>kg</item>
-        <item>gram</item>
-        <item>piece</item>
-        <item>liter</item>
+        <item>@string/kg</item>
+        <item>@string/gram</item>
+        <item>@string/piece</item>
+        <item>@string/liter</item>
+    </array>
+
+    <array name="pref_measure_values">
+        <item>@string/pref_met_val</item>
+        <item>@string/pref_imp_val</item>
+    </array>
+
+    <array name="pref_measure_entries">
+        <item>@string/pref_met_ent</item>
+        <item>@string/pref_imp_ent</item>
     </array>
 </resources>

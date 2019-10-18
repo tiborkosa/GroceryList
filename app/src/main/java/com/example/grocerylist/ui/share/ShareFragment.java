@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -49,6 +50,7 @@ import static com.example.grocerylist.Util.Constants.GROCERY_LIST_ID;
 
 public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdapter.OnItemClicked {
 
+    public static final String EMAILS = "emails";
     @BindView(R.id.et_email_search) EditText mEmailSearch;
     @BindView(R.id.ib_share_list) ImageButton mShareBtn;
     @BindView(R.id.radioGroup) RadioGroup mShareMethod;
@@ -56,7 +58,7 @@ public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdap
     @BindView(R.id.tv_gli_due_date_text) TextView mShareListDueDate;
     @BindView(R.id.rv_share_email_list) RecyclerView mRecyclerView;
 
-    private List<String> shareEmailList = new ArrayList<>();
+    private ArrayList<String> shareEmailList = new ArrayList<>();
     private List<User> shareGLUserList = new ArrayList<>();
     private ShareEmailRecycleViewAdapter adapter;
     private GroceryList mGroceryList;
@@ -72,6 +74,7 @@ public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdap
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         mGroceryList = new GroceryList();
         mGroceryList.setDueDate(getArguments().get(GL_DUE_DATE).toString());
         mGroceryList.setId(getArguments().get(GROCERY_LIST_ID).toString());
@@ -82,6 +85,9 @@ public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdap
             mShareListDueDate.setText(mGroceryList.getDueDate());
         if(mGroceryList.getListName() != null)
             mShareListName.setText(mGroceryList.getListName());
+
+        adapter = new ShareEmailRecycleViewAdapter(shareEmailList, this);
+        mRecyclerView.setAdapter(adapter);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -89,23 +95,14 @@ public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdap
 
         View root = inflater.inflate(R.layout.fragment_share, container, false);
         ButterKnife.bind(this, root);
-
+        setRetainInstance(true);
         mShareBtn.setVisibility(View.GONE);
-        mShareMethod.setOnCheckedChangeListener((group, checkedId) -> {
-            clearRecyclerView();
-        });
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
 
         return root;
-    }
-
-    private void clearRecyclerView() {
-        shareEmailList.clear();
-        shareGLUserList.clear();
-        updateRecyclerView();
     }
 
     @Override
@@ -122,8 +119,7 @@ public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdap
         InputMethodManager inputManager = (InputMethodManager) this.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(this.getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         String email = mEmailSearch.getText().toString();
-        //TODO: verify if it is an email
-        // TODO: if gl user search user update database else use default email
+
         if(isValidEmail(email)){
             if(isGLSelected()){
              // search user by email
@@ -161,6 +157,7 @@ public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdap
     }
 
     private void updateRecyclerView(){
+        Log.d(TAG,"updateRecyclerView");
         adapter = new ShareEmailRecycleViewAdapter(shareEmailList, this);
         mRecyclerView.setAdapter(adapter);
     }

@@ -22,19 +22,46 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <style name="dialog" parent="@android:style/Theme.Dialog" >
-        <item name="android:windowBackground">@color/colorPrimaryDark</item>
-        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:background">@color/white</item>
         <item name="android:windowTitleStyle">@style/dialog_title_style</item>
         <item name="android:padding">8dp</item>
     </style>
+
     <style name="dialog_title_style" parent="android:Widget.TextView">
-        <item name="android:background">@android:color/black</item>
+        <item name="android:background">@color/colorPrimaryDarker</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:color">@color/white</item>
         <item name="android:padding">10dp</item>
+        <item name="android:gravity">center_vertical</item>
     </style>
+
     <style name="datepicker" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
+    <style name="EditText" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+        <item name="textAppearanceBody1" />
+        <item name="android:minWidth">200dp</item>
+    </style>
+
+    <style name="EditTextListItem" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+        <item name="textAppearanceBody1" />
+    </style>
+
+    <style name="NoItemTextStyle">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">@color/white</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowDx">4</item>
+        <item name="android:shadowRadius">1</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">24sp</item>
     </style>
 </resources>

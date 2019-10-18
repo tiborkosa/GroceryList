@@ -3,11 +3,11 @@
 
     <string name="facebook_application_id" translatable="false">727413587706249</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb727413587706249</string>
-    <string name="title_activity_main_grocery">MainGroceryActivity</string>
+    <string name="title_activity_main_grocery">Groceries</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">Guest</string>
+    <string name="nav_header_subtitle">your@email.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
@@ -38,5 +38,37 @@
     <string name="delete_item">Delete Item</string>
     <string name="email">email</string>
     <string name="gl_no_list_items">No items added yet.</string>
+    <string name="shared_list">Shared List</string>
+    <string name="sharing_methods">Sharing Methods</string>
+    <string name="grocery_user">Grocery User</string>
+    <string name="Email">Email</string>
+    <string name="add_users">Add users</string>
+    <string name="user_name">User Name:</string>
+
+    <string name="kg">kg(s)</string>
+    <string name="gram">gram(s)</string>
+    <string name="liter">liter(s)</string>
+
+    <string name="pound">pound(s)</string>
+    <string name="ounce">ounce(s)</string>
+    <string name="piece">piece(s)</string>
+    <string name="gallon">gallon(s)</string>
+
+    <string name="prio_low">Low</string>
+    <string name="prio_med">Medium</string>
+    <string name="prio_high">High</string>
+
+    <string name="pref_met_val" translatable="false">unit_measure_metric</string>
+    <string name="pref_imp_val" translatable="false">unit_measure_imperial</string>
+    <string name="pref_met_ent">Metric (kg)</string>
+    <string name="pref_imp_ent">Imperial (lb)</string>
+
+    <string name="pref_noti_key" translatable="false">notification</string>
+    <string name="pref_noti_title" translatable="true">Notifications</string>
+    <string name="pref_noti_summ_on" translatable="true">Send notification</string>
+    <string name="pref_noti_summ_off" translatable="true">Don\'t Send notification</string>
+    <string name="pref_measure_key" translatable="false">unit_measurement</string>
+    <string name="pref_measure_title" translatable="true">Measurements</string>
+    <string name="priority">Priority</string>
 
 </resources>

@@ -12,6 +12,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         resConfigs "en"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -38,9 +39,16 @@ dependencies {
     // RecyclerView
     implementation 'com.android.support:recyclerview-v7:28.0.0'
 
+    // picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    // timber
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
     // database
     implementation 'com.google.firebase:firebase-database:19.1.0'
     implementation 'com.google.firebase:firebase-auth:19.0.0'
+
     // Google Analytics
     implementation 'com.google.firebase:firebase-analytics:17.2.0'
     //implementation 'com.google.firebase:firebase-core:19.0.0'

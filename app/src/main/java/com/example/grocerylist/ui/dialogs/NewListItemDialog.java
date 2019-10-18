@@ -1,11 +1,13 @@
 package com.example.grocerylist.ui.dialogs;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -13,14 +15,20 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.preference.PreferenceManager;
 
 import com.example.grocerylist.R;
+import com.example.grocerylist.Util.MeasureUtil;
+import com.example.grocerylist.Util.MyApplication;
 import com.example.grocerylist.entities.ListItem;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.lang.reflect.Array;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 import static com.example.grocerylist.Util.Constants.DLG_TITLE;
 import static com.example.grocerylist.Util.Constants.ITEM_ID;
@@ -56,6 +64,14 @@ public class NewListItemDialog extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dialog_new_gl_item,null);
         ButterKnife.bind(this, view);
+
+        String[] measuringUnits = MeasureUtil.getMeasurements();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this.getContext(), android.R.layout.simple_spinner_item, measuringUnits);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Spinner sItems = (Spinner) view.findViewById(R.id.spinner1);
+        mMeasureUnit.setAdapter(adapter);
 
         return view;
     }

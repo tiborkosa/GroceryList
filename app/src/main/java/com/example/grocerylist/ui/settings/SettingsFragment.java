@@ -2,11 +2,13 @@ package com.example.grocerylist.ui.settings;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceScreen;
 
 import com.example.grocerylist.R;
@@ -45,6 +47,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         Preference preference = findPreference(key);
+        Log.d("sdf", "ssss" +key);
         if(null != preference) {
             if(!(preference instanceof CheckBoxPreference)){
                 String value = sharedPreferences.getString(preference.getKey(), "");
