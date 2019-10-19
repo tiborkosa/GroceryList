@@ -1,4 +1,4 @@
-package com.example.grocerylist.Adapters;
+package com.example.grocerylist.adapters;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.grocerylist.R;
-import com.example.grocerylist.Util.MyApplication;
+import com.example.grocerylist.util.MyApplication;
 
 /**
  * Helper class to perform left and right swipe on the recycler view

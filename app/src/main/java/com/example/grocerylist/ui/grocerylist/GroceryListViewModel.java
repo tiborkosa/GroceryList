@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
-import com.example.grocerylist.Util.UserUtil;
+import com.example.grocerylist.util.UserUtil;
 import com.example.grocerylist.entities.GroceryList;
 import com.example.grocerylist.repository.FirebaseQueryLiveData;
 import com.google.firebase.database.DataSnapshot;

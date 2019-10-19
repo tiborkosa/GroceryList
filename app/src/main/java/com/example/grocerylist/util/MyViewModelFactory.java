@@ -1,4 +1,4 @@
-package com.example.grocerylist.Util;
+package com.example.grocerylist.util;
 
 import android.os.Bundle;
 

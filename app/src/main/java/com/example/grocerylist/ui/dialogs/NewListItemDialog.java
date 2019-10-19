@@ -1,6 +1,5 @@
 package com.example.grocerylist.ui.dialogs;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,27 +14,22 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.preference.PreferenceManager;
 
 import com.example.grocerylist.R;
-import com.example.grocerylist.Util.MeasureUtil;
-import com.example.grocerylist.Util.MyApplication;
+import com.example.grocerylist.util.MeasureUtil;
 import com.example.grocerylist.entities.ListItem;
 import com.google.android.material.snackbar.Snackbar;
-
-import java.lang.reflect.Array;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import timber.log.Timber;
 
-import static com.example.grocerylist.Util.Constants.DLG_TITLE;
-import static com.example.grocerylist.Util.Constants.ITEM_ID;
-import static com.example.grocerylist.Util.Constants.ITEM_NAME;
-import static com.example.grocerylist.Util.Constants.ITEM_POSITION;
-import static com.example.grocerylist.Util.Constants.ITEM_QUANTITY;
-import static com.example.grocerylist.Util.Constants.ITEM_UNIT_OF_MEASURE;
+import static com.example.grocerylist.util.Constants.DLG_TITLE;
+import static com.example.grocerylist.util.Constants.ITEM_ID;
+import static com.example.grocerylist.util.Constants.ITEM_NAME;
+import static com.example.grocerylist.util.Constants.ITEM_POSITION;
+import static com.example.grocerylist.util.Constants.ITEM_QUANTITY;
+import static com.example.grocerylist.util.Constants.ITEM_UNIT_OF_MEASURE;
 
 public class NewListItemDialog extends DialogFragment {
 

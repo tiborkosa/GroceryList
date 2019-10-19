@@ -19,11 +19,11 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.grocerylist.Adapters.GroceryListRecycleViewAdapter;
-import com.example.grocerylist.Adapters.MyItemTouchHelper;
-import com.example.grocerylist.Adapters.MyTouchListener;
+import com.example.grocerylist.adapters.GroceryListRecycleViewAdapter;
+import com.example.grocerylist.adapters.MyItemTouchHelper;
+import com.example.grocerylist.adapters.MyTouchListener;
 import com.example.grocerylist.R;
-import com.example.grocerylist.Util.UserUtil;
+import com.example.grocerylist.util.UserUtil;
 import com.example.grocerylist.ui.dialogs.NewGroceryListItemDialog;
 import com.example.grocerylist.entities.GroceryList;
 import com.example.grocerylist.entities.User;
@@ -38,13 +38,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.example.grocerylist.Util.Constants.DLG_TITLE;
-import static com.example.grocerylist.Util.Constants.DL_PRIORITY;
-import static com.example.grocerylist.Util.Constants.GL_CREATE_DATE;
-import static com.example.grocerylist.Util.Constants.GL_DUE_DATE;
-import static com.example.grocerylist.Util.Constants.GL_NAME;
-import static com.example.grocerylist.Util.Constants.GL_POSITION;
-import static com.example.grocerylist.Util.Constants.GROCERY_LIST_ID;
+import static com.example.grocerylist.util.Constants.DLG_TITLE;
+import static com.example.grocerylist.util.Constants.DL_PRIORITY;
+import static com.example.grocerylist.util.Constants.GL_CREATE_DATE;
+import static com.example.grocerylist.util.Constants.GL_DUE_DATE;
+import static com.example.grocerylist.util.Constants.GL_NAME;
+import static com.example.grocerylist.util.Constants.GL_POSITION;
+import static com.example.grocerylist.util.Constants.GROCERY_LIST_ID;
 import static com.example.grocerylist.ui.grocerylist.GroceryListViewModel.listRef;
 
 public class GroceryListFragment
@@ -117,6 +117,13 @@ public class GroceryListFragment
             }
             gList = new ArrayList<>(list);
             recyclerView.setAdapter( new GroceryListRecycleViewAdapter(list));
+            boolean isTablet = getResources().getBoolean(R.bool.tablet);
+            if(isTablet && list.size()>0){
+                Bundle bundle = new Bundle();
+                bundle.putString(GROCERY_LIST_ID,gList.get(0).getId());
+                bundle.putString(GL_NAME,gList.get(0).getListName());
+                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.nav_list, bundle);
+            }
         });
     }
 

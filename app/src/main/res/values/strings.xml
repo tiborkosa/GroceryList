@@ -70,5 +70,9 @@
     <string name="pref_measure_key" translatable="false">unit_measurement</string>
     <string name="pref_measure_title" translatable="true">Measurements</string>
     <string name="priority">Priority</string>
+    <string name="appwidget_text">Grocery List</string>
+    <string name="add_widget">Add widget</string>
+    <string name="appwidget_title">Grocery List</string>
+    <string name="menu_grocery_list_item">Grocery List</string>
 
 </resources>

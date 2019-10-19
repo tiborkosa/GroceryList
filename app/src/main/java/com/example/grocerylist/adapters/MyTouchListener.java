@@ -1,4 +1,4 @@
-package com.example.grocerylist.Adapters;
+package com.example.grocerylist.adapters;
 
 import android.util.Log;
 import android.view.GestureDetector;
@@ -10,7 +10,7 @@ import androidx.core.view.GestureDetectorCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.grocerylist.R;
-import com.example.grocerylist.Util.MyApplication;
+import com.example.grocerylist.util.MyApplication;
 
 /**
  *  Helper class to perform click on the RecyclerView

@@ -18,7 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.grocerylist.Util.Constants.GROCERY_LIST_ID;
+import static com.example.grocerylist.util.Constants.GROCERY_LIST_ID;
 
 
 public class ListItemsViewModel extends ViewModel {
@@ -29,7 +29,13 @@ public class ListItemsViewModel extends ViewModel {
     private static final String TAG = ListItemsViewModel.class.getSimpleName();
 
     public ListItemsViewModel(Bundle arg) {
-        String pID = arg.getString(GROCERY_LIST_ID, "");
+        String pID = "-LrSMyKgpCSgELmSICao";
+        // TODO: if tablet load the gl list first item if present
+        if(arg != null){
+            pID = arg.getString(GROCERY_LIST_ID, "");
+        }
+
+
         List_Items_Ref = FirebaseDatabase.getInstance().getReference("/g_list_items/"+pID);
         Log.d(TAG, "id is: "+ pID);
 

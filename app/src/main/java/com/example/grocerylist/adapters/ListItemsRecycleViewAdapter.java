@@ -1,16 +1,18 @@
-package com.example.grocerylist.Adapters;
+package com.example.grocerylist.adapters;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.grocerylist.R;
+import com.example.grocerylist.util.MyApplication;
+import com.example.grocerylist.entities.ListItem;
 
 import java.util.List;
 
@@ -19,34 +21,37 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Recycler view adapter for displaying the list of user emails to share the list with
+ * Recycler view adapter for displaying the list items
  */
-public class ShareEmailRecycleViewAdapter extends RecyclerView.Adapter<ShareEmailRecycleViewAdapter.ListItemsHolder> {
+public class ListItemsRecycleViewAdapter extends RecyclerView.Adapter<ListItemsRecycleViewAdapter.ListItemsHolder> {
 
-    private final List<String> mListItems;
+    private final List<ListItem> mListItems;
     private final int mNumberOfItems;
     private OnItemClicked mCallback;
-    private static final String TAG = ShareEmailRecycleViewAdapter.class.getSimpleName();
+    private static final String TAG = ListItemsRecycleViewAdapter.class.getSimpleName();
+    private static String[] measurements = MyApplication.getAppContext().getResources().getStringArray(R.array.unit_measure_imperial);
+
 
     /**
      * On click interface to be implemented in the calling class
-     * This is used if we want to remove an item
+     * This is performed when the checkbox is clicked
+     * Will mark the item as purchased
+     * Returns the item and the position in the adapter
      */
     public interface OnItemClicked {
-        void onDeleteItem(int position);
+        void onCheckBoxClicked(ListItem listItem, int position);
     }
 
     /**
      * Constructor to set up the data
-     * @param emailList array list to be displayed
+     * @param listItems array list to be displayed
      * @param callback of the item clicked
      */
-    public ShareEmailRecycleViewAdapter(List<String> emailList, OnItemClicked callback ){
-        Log.d(TAG, "ShareEmailRecycleViewAdapter");
-        mListItems = emailList;
+    public ListItemsRecycleViewAdapter(List<ListItem> listItems, OnItemClicked callback ){
+        mListItems = listItems;
         int size = 0;
-        if(emailList != null){
-            size = emailList.size();
+        if(listItems != null){
+            size = listItems.size();
         }
         mNumberOfItems = size;
         mCallback = callback;
@@ -64,7 +69,7 @@ public class ShareEmailRecycleViewAdapter extends RecyclerView.Adapter<ShareEmai
         Log.d(TAG,"onCreateViewHolder");
         View view = LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.rv_share_email_item, parent, false);
+                .inflate(R.layout.rv_list_items, parent, false);
 
         return new ListItemsHolder(view);
     }
@@ -93,7 +98,11 @@ public class ShareEmailRecycleViewAdapter extends RecyclerView.Adapter<ShareEmai
      */
     class ListItemsHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.tv_rv_email) TextView mEmail;
+        @BindView(R.id.tv_list_item_name) TextView mListName;
+        @BindView(R.id.tv_amount) TextView mAmount;
+        @BindView(R.id.tv_measure_unit) TextView mUnitMeasure;
+        @BindView(R.id.cb_purchased) CheckBox mIsPurchased;
+
 
         /**
          * Constructor of the view holder
@@ -106,21 +115,28 @@ public class ShareEmailRecycleViewAdapter extends RecyclerView.Adapter<ShareEmai
 
         /**
          * Binding the data to the view
-         * @param email data
+         * @param listItem data
          */
-        private void bind(String email){
-            mEmail.setText(email);
+        private void bind(ListItem listItem){
+            mListName.setText(listItem.getName());
+            mAmount.setText(String.valueOf(listItem.getQuantity()));
+            mUnitMeasure.setText(measurements[listItem.getMeasure()]);
+            if(listItem.isPurchased()){
+                mIsPurchased.setChecked(true);
+            }
         }
 
         /**
-         * Icon clicked listener and setting up the callback
+         * Checkbox clicked listener and setting up the callback
          * @param v that was clicked
          */
-        @OnClick(R.id.rv_delete_email)
-        public void onEmailDeleted(View v){
-            ImageButton img_btn = (ImageButton) v;
-            if(img_btn != null){
-                mCallback.onDeleteItem(getAdapterPosition());
+        @OnClick(R.id.cb_purchased)
+        public void onCheckedBoxClicked(View v){
+            CheckBox checkBox = (CheckBox) v;
+            if(checkBox != null){
+                ListItem listItem = mListItems.get(getAdapterPosition());
+                listItem.setPurchased(checkBox.isChecked());
+                mCallback.onCheckBoxClicked(mListItems.get(getAdapterPosition()), getAdapterPosition());
             }
         }
     }

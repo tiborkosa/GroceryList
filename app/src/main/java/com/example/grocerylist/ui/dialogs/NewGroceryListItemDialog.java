@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.grocerylist.R;
-import com.example.grocerylist.Util.MyDateFormat;
+import com.example.grocerylist.util.MyDateFormat;
 import com.example.grocerylist.entities.GroceryList;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -26,12 +26,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.example.grocerylist.Util.Constants.DLG_TITLE;
-import static com.example.grocerylist.Util.Constants.DL_PRIORITY;
-import static com.example.grocerylist.Util.Constants.GL_DUE_DATE;
-import static com.example.grocerylist.Util.Constants.GL_NAME;
-import static com.example.grocerylist.Util.Constants.GL_POSITION;
-import static com.example.grocerylist.Util.Constants.GROCERY_LIST_ID;
+import static com.example.grocerylist.util.Constants.DLG_TITLE;
+import static com.example.grocerylist.util.Constants.DL_PRIORITY;
+import static com.example.grocerylist.util.Constants.GL_DUE_DATE;
+import static com.example.grocerylist.util.Constants.GL_NAME;
+import static com.example.grocerylist.util.Constants.GL_POSITION;
+import static com.example.grocerylist.util.Constants.GROCERY_LIST_ID;
 
 public class NewGroceryListItemDialog extends DialogFragment {
 

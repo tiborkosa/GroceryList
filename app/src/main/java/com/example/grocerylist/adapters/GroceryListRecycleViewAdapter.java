@@ -1,4 +1,4 @@
-package com.example.grocerylist.Adapters;
+package com.example.grocerylist.adapters;
 
 import android.util.Log;
 import android.view.LayoutInflater;

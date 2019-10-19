@@ -17,18 +17,16 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.grocerylist.Adapters.ShareEmailRecycleViewAdapter;
+import com.example.grocerylist.adapters.ShareEmailRecycleViewAdapter;
 import com.example.grocerylist.R;
-import com.example.grocerylist.Util.EmailUtil;
-import com.example.grocerylist.Util.MyApplication;
+import com.example.grocerylist.util.EmailUtil;
+import com.example.grocerylist.util.MyApplication;
 import com.example.grocerylist.entities.GroceryList;
-import com.example.grocerylist.entities.ListItem;
 import com.example.grocerylist.entities.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,10 +41,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.example.grocerylist.Util.Constants.GL_CREATE_DATE;
-import static com.example.grocerylist.Util.Constants.GL_DUE_DATE;
-import static com.example.grocerylist.Util.Constants.GL_NAME;
-import static com.example.grocerylist.Util.Constants.GROCERY_LIST_ID;
+import static com.example.grocerylist.util.Constants.GL_CREATE_DATE;
+import static com.example.grocerylist.util.Constants.GL_DUE_DATE;
+import static com.example.grocerylist.util.Constants.GL_NAME;
+import static com.example.grocerylist.util.Constants.GROCERY_LIST_ID;
 
 public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdapter.OnItemClicked {
 

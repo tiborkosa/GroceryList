@@ -18,11 +18,11 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.grocerylist.Adapters.ListItemsRecycleViewAdapter;
-import com.example.grocerylist.Adapters.MyItemTouchHelper;
 import com.example.grocerylist.MainActivity;
+import com.example.grocerylist.adapters.ListItemsRecycleViewAdapter;
+import com.example.grocerylist.adapters.MyItemTouchHelper;
 import com.example.grocerylist.R;
-import com.example.grocerylist.Util.MyViewModelFactory;
+import com.example.grocerylist.util.MyViewModelFactory;
 import com.example.grocerylist.ui.dialogs.NewListItemDialog;
 import com.example.grocerylist.entities.ListItem;
 import com.google.android.material.snackbar.Snackbar;
@@ -35,14 +35,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.example.grocerylist.Util.Constants.DLG_TITLE;
-import static com.example.grocerylist.Util.Constants.GL_NAME;
-import static com.example.grocerylist.Util.Constants.GROCERY_LIST_ID;
-import static com.example.grocerylist.Util.Constants.ITEM_ID;
-import static com.example.grocerylist.Util.Constants.ITEM_NAME;
-import static com.example.grocerylist.Util.Constants.ITEM_POSITION;
-import static com.example.grocerylist.Util.Constants.ITEM_QUANTITY;
-import static com.example.grocerylist.Util.Constants.ITEM_UNIT_OF_MEASURE;
+import static com.example.grocerylist.util.Constants.DLG_TITLE;
+import static com.example.grocerylist.util.Constants.GL_NAME;
+import static com.example.grocerylist.util.Constants.GROCERY_LIST_ID;
+import static com.example.grocerylist.util.Constants.ITEM_ID;
+import static com.example.grocerylist.util.Constants.ITEM_NAME;
+import static com.example.grocerylist.util.Constants.ITEM_POSITION;
+import static com.example.grocerylist.util.Constants.ITEM_QUANTITY;
+import static com.example.grocerylist.util.Constants.ITEM_UNIT_OF_MEASURE;
 import static com.example.grocerylist.ui.listItems.ListItemsViewModel.List_Items_Ref;
 
 public class ListItemsFragment
@@ -68,7 +68,11 @@ public class ListItemsFragment
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_list_items, container, false);
-        ((MainActivity) getActivity()).getSupportActionBar().setTitle(getArguments().getString(GL_NAME, "Grocery List"));
+
+        if(getArguments() != null && getArguments().containsKey(GL_NAME)) {
+            ((MainActivity) getActivity()).getSupportActionBar().setTitle(getArguments().getString(GL_NAME, "Grocery List"));
+        }
+        
         viewModel =
                 ViewModelProviders
                         .of(this,

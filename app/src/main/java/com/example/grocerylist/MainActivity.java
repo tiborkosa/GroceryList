@@ -6,18 +6,20 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
-import com.example.grocerylist.Util.UserUtil;
+import com.example.grocerylist.util.UserUtil;
 import com.example.grocerylist.entities.User;
+import com.example.grocerylist.ui.grocerylist.GroceryListFragment;
 import com.example.grocerylist.ui.user.UserViewModel;
 import com.firebase.ui.auth.AuthUI;
 
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private AppBarConfiguration mAppBarConfiguration;
     private FirebaseDatabase mFirebaseDatabase;
-
+    private Boolean isTablet = false;
 
     private static final int RC_SIGN_IN = 7979;
     private FirebaseAuth mFirebaseAuth;
@@ -67,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        isTablet = getResources().getBoolean(R.bool.tablet);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -79,11 +83,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_settings,
-                R.id.nav_user_profile, R.id.nav_share, R.id.nav_messages, R.id.nav_list)
-                .setDrawerLayout(drawer)
-                .build();
+        if(isTablet){
+            mAppBarConfiguration = new AppBarConfiguration.Builder(
+                    R.id.nav_settings,
+                    R.id.nav_user_profile, R.id.nav_share, R.id.nav_messages, R.id.nav_list)
+                    .setDrawerLayout(drawer)
+                    .build();
+
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.add(R.id.nav_host_fragment_gl, GroceryListFragment.newInstance(), "gl_fragment");
+            transaction.commit();
+        } else {
+            mAppBarConfiguration = new AppBarConfiguration.Builder(
+                    R.id.nav_home, R.id.nav_settings,
+                    R.id.nav_user_profile, R.id.nav_share, R.id.nav_messages, R.id.nav_list)
+                    .setDrawerLayout(drawer)
+                    .build();
+        }
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -188,7 +205,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
             case R.id.nav_home:
-                Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.nav_home);
+                if(isTablet) {
+                    Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.nav_list);
+                } else {
+                    Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.nav_home);
+                }
                 break;
             case R.id.nav_user_profile:
                 Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.nav_user_profile);

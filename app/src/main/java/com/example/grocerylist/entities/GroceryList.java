@@ -1,6 +1,6 @@
 package com.example.grocerylist.entities;
 
-import com.example.grocerylist.Util.MyDateFormat;
+import com.example.grocerylist.util.MyDateFormat;
 
 import java.util.Calendar;
 
