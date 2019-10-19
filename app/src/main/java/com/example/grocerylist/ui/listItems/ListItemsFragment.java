@@ -72,7 +72,7 @@ public class ListItemsFragment
         if(getArguments() != null && getArguments().containsKey(GL_NAME)) {
             ((MainActivity) getActivity()).getSupportActionBar().setTitle(getArguments().getString(GL_NAME, "Grocery List"));
         }
-        
+
         viewModel =
                 ViewModelProviders
                         .of(this,

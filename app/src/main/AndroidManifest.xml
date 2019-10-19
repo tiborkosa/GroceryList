@@ -21,9 +21,18 @@
             </intent-filter>
         </activity>
 
-    </application>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+        <receiver android:name=".widget.GroceryListWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
 
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/new_app_widget_info" />
+        </receiver>
+
+    </application>
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
 </manifest>

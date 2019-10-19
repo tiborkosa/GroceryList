@@ -82,10 +82,13 @@ public class MyTouchListener  implements RecyclerView.OnItemTouchListener {
                 View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
                 int childPosition = recyclerView.getChildAdapterPosition(child);
 
+                // Since the recycler view's height is match parent we need to return if child is not found
+                if(childPosition < 0) return true;
+
                 // get the share button
                 // NOTE: everything from the share icon's left will not trigger the list to open
                 View view = child.findViewById(R.id.ib_share_list);
-                if(view != null) {
+                if(view != null && childPosition >=0) {
                     if (e.getRawX() >= view.getLeft()) {
                         Log.d("MyTouchListener", "Shared button was clicked");
                         mOnTouchActionListener.onSharedClicked(childPosition);

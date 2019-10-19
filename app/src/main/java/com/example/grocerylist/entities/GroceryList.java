@@ -1,10 +1,13 @@
 package com.example.grocerylist.entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.example.grocerylist.util.MyDateFormat;
 
 import java.util.Calendar;
 
-public final class GroceryList {
+public final class GroceryList implements Parcelable {
 
     private String id;
     private String listName;
@@ -77,5 +80,19 @@ public final class GroceryList {
                 ", dueDate='" + dueDate + '\'' +
                 ", priority=" + priority +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.listName);
+        dest.writeString(this.createDate);
+        dest.writeString(this.dueDate);
+        dest.writeInt(this.priority);
     }
 }
