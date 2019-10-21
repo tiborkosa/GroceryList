@@ -30,6 +30,11 @@
         <item name="android:padding">8dp</item>
     </style>
 
+    <style name="DialogWindowAnim">
+        <item name="android:windowEnterAnimation">@anim/slide_in_left</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_right</item>
+    </style>
+
     <style name="dialog_title_style" parent="android:Widget.TextView">
         <item name="android:background">@color/colorPrimaryDarker</item>
         <item name="android:textSize">20dp</item>

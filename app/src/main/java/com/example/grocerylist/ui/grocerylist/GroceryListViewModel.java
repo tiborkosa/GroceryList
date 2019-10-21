@@ -24,39 +24,21 @@ public class GroceryListViewModel extends ViewModel {
     public static DatabaseReference listRef = FirebaseDatabase.getInstance().getReference(userId+"/my_list");
     private final FirebaseQueryLiveData liveData = new FirebaseQueryLiveData(listRef);
 
-    //-------------
-    /*private final MediatorLiveData<List<GroceryList>> groceryListLiveData = new MediatorLiveData<>();
-
-    public HotStockViewModel() {
-        // Set up the MediatorLiveData to convert DataSnapshot objects into HotStock objects
-        groceryListLiveData.addSource(liveData, new Observer<DataSnapshot>() {
-            @Override
-            public void onChanged(@Nullable final DataSnapshot dataSnapshot) {
-                if (dataSnapshot != null) {
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            List<GroceryList> groceryLists = new ArrayList<>();
-                            for(DataSnapshot data: dataSnapshot.getChildren()){
-                                groceryLists.add(data.getValue(GroceryList.class));
-                            }
-                            groceryListLiveData.postValue(groceryLists);
-                        }
-                    }).start();
-                } else {
-                    groceryListLiveData.setValue(null);
-                }
-            }
-        });
-    }*/
-
-
-    //-------------
-
+    /**
+     * Setting up the live data with deserializer
+     */
     private final LiveData<List<GroceryList>> groceryListLiveData =
             Transformations.map(liveData, new Deserializer());
 
+    /**
+     * Deserializer class to transform the data from firebase
+     */
     private class Deserializer implements Function<DataSnapshot, List<GroceryList>> {
+        /**
+         * parsing the date returned fromm firebase
+         * @param dataSnapshot from firebase
+         * @return list of grocery list
+         */
         @Override
         public List<GroceryList> apply(DataSnapshot dataSnapshot) {
             Log.d(TAG, "Parsing grocery list dataSnapshot.");
@@ -71,6 +53,10 @@ public class GroceryListViewModel extends ViewModel {
         }
     }
 
+    /**
+     * Setting up the live data
+     * @return
+     */
     public LiveData<List<GroceryList>> getGroceryList() {
         Log.d(TAG,"Getting GroceryList ");
         return groceryListLiveData;

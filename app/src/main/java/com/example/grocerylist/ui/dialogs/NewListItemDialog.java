@@ -31,8 +31,17 @@ import static com.example.grocerylist.util.Constants.ITEM_POSITION;
 import static com.example.grocerylist.util.Constants.ITEM_QUANTITY;
 import static com.example.grocerylist.util.Constants.ITEM_UNIT_OF_MEASURE;
 
+/**
+ * New list item dialog is used to create new or edit list items
+ *
+ * NOTE: DialogSubmitListener interface needs to be implemented in the calling class
+ */
 public class NewListItemDialog extends DialogFragment {
 
+    /**
+     * DialogSubmitListener interface to add the list item
+     * if position is passed in the item was edited
+     */
     public interface DialogSubmitListener {
         void onDialogSubmit(ListItem listItem, int position);
     }
@@ -44,8 +53,15 @@ public class NewListItemDialog extends DialogFragment {
     @Nullable @BindView(R.id.btn_dlg_add)
     Button mSubmit;
 
+    // callback
     private DialogSubmitListener callback;
 
+    /**
+     * Getting the new instance of the dialog
+     * @param args holds the passed in data if the item is edited
+     * @param callback implemented DialogSubmitListener interface
+     * @return the new fragment
+     */
     public static NewListItemDialog newInstance(Bundle args, DialogSubmitListener callback){
         NewListItemDialog frag = new NewListItemDialog();
         frag.callback = callback;
@@ -53,6 +69,13 @@ public class NewListItemDialog extends DialogFragment {
         return frag;
     }
 
+    /**
+     * onCreateView
+     * @param inflater Layout inflater
+     * @param container where we want to inflate the dialog
+     * @param savedInstanceState bundle of the saved instance state
+     * @return inflated view
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -64,18 +87,23 @@ public class NewListItemDialog extends DialogFragment {
                 this.getContext(), android.R.layout.simple_spinner_item, measuringUnits);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //Spinner sItems = (Spinner) view.findViewById(R.id.spinner1);
         mMeasureUnit.setAdapter(adapter);
 
         return view;
     }
 
+    /**
+     * onViewCreated to set up the fields
+     * @param view inflated view
+     * @param savedInstanceState saved instance state
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         getDialog().setTitle(getArguments().getString(DLG_TITLE, "Dialog"));
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        getDialog().getWindow().getAttributes().windowAnimations = R.style.DialogWindowAnim;
 
         mListItemName.setText(getArguments().getString(ITEM_NAME ,""));
         double q = getArguments().getDouble(ITEM_QUANTITY, 0);
@@ -88,6 +116,11 @@ public class NewListItemDialog extends DialogFragment {
         }
     }
 
+    /**
+     * on adding new item
+     * Binded by Butterknife onclick
+     * calles the callback and passes in the newly created or updated list item
+     */
     @Nullable @OnClick(R.id.btn_dlg_add)
     public void onAdd(){
         String itemName = mListItemName.getText().toString();
@@ -116,11 +149,18 @@ public class NewListItemDialog extends DialogFragment {
         }
     }
 
+    /**
+     * Closing the dialog
+     */
     @Nullable @OnClick(R.id.btn_dlg_cancel)
     public void onCancelDialog(){
         dismiss();
     }
 
+    /**
+     * helper function to display snackbar messages
+     * @param message
+     */
     private void displaySnackBar(String message){
         Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
     }

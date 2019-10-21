@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ import com.example.grocerylist.entities.GroceryList;
 import com.example.grocerylist.entities.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -44,15 +46,12 @@ import static com.example.grocerylist.util.Constants.GL_DUE_DATE;
 import static com.example.grocerylist.util.Constants.GL_NAME;
 import static com.example.grocerylist.util.Constants.GROCERY_LIST_ID;
 
-/**
- * Sharing the list
- * for the free version we only share it via email
- */
 public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdapter.OnItemClicked {
 
     public static final String EMAILS = "emails";
     @BindView(R.id.et_email_search) EditText mEmailSearch;
     @BindView(R.id.ib_share_list) ImageButton mShareBtn;
+    @BindView(R.id.radioGroup) RadioGroup mShareMethod;
     @BindView(R.id.tv_gli_name) TextView mShareListName;
     @BindView(R.id.tv_gli_due_date_text) TextView mShareListDueDate;
     @BindView(R.id.rv_share_email_list) RecyclerView mRecyclerView;
@@ -64,22 +63,12 @@ public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdap
 
     private static final String TAG = ShareFragment.class.getSimpleName();
 
-    /**
-     * Getting a new instance of the fragment
-     * @param args
-     * @return
-     */
     public static ShareFragment newInstance(Bundle args){
         ShareFragment frag = new ShareFragment();
         frag.setArguments(args);
         return frag;
     }
 
-    /**
-     * on view created we set up the needed fields
-     * @param view inflated view
-     * @param savedInstanceState
-     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -99,13 +88,6 @@ public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdap
         mRecyclerView.setAdapter(adapter);
     }
 
-    /**
-     * on create view we inflate the layout
-     * @param inflater layout inflater
-     * @param container where we want to inflate the fragment
-     * @param savedInstanceState
-     * @return inflated view
-     */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -121,10 +103,6 @@ public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdap
         return root;
     }
 
-    /**
-     * overridden interface of the @ShareEmailRecycleViewAdapter
-     * @param position of the item to be deleted
-     */
     @Override
     public void onDeleteItem(int position) {
         shareEmailList.remove(position);
@@ -134,10 +112,6 @@ public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdap
         updateRecyclerView();
     }
 
-    /**
-     * Adding new email to the list
-     * We check if it is a valid email
-     */
     @OnClick(R.id.btn_add_email)
     public void onAddEmailClicked(){
         InputMethodManager inputManager = (InputMethodManager) this.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -145,70 +119,96 @@ public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdap
         String email = mEmailSearch.getText().toString();
 
         if(isValidEmail(email)){
-            shareEmailList.add(email);
-            mEmailSearch.setText("");
-            updateRecyclerView();
+            if(isGLSelected()){
+             // search user by email
+                FirebaseDatabase.getInstance().getReference("/users").orderByChild("email").equalTo(email).addListenerForSingleValueEvent( new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        try {
+                            DataSnapshot snapshot = dataSnapshot.getChildren().iterator().next();
+                            User user = snapshot.getValue(User.class);
+                            user.setId(snapshot.getKey());
+
+                            shareGLUserList.add(user);
+                            shareEmailList.add(email);
+                            mEmailSearch.setText("");
+                            updateRecyclerView();
+                            Log.d(TAG, "user was found " + user.toString());
+                        } catch (Exception e){
+                            Toast.makeText(getContext(), "User is not registered.", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.d(TAG, "Error while retrieving list" + databaseError.getMessage());
+                    }
+                });
+            } else {
+                shareEmailList.add(email);
+                mEmailSearch.setText("");
+                updateRecyclerView();
+            }
         } else {
             Toast.makeText(getContext(), "Entered email is invalid!", Toast.LENGTH_LONG).show();
         }
     }
 
-    /**
-     * Helper function to update the view
-     */
     private void updateRecyclerView(){
         Log.d(TAG,"updateRecyclerView");
         adapter = new ShareEmailRecycleViewAdapter(shareEmailList, this);
         mRecyclerView.setAdapter(adapter);
     }
 
-    /**
-     * Checking if the entered email is valid or not
-     * @param email to be validated
-     * @return true if valid, false if not
-     */
     private boolean isValidEmail(String email) {
         String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
         return email.matches(regex);
     }
 
-    /**
-     * Sharing the list
-     * We are using the installed email apps
-     */
+    private boolean isGLSelected(){
+        return mShareMethod.getCheckedRadioButtonId() == R.id.rb_gl_user;
+    }
+
     @OnClick(R.id.btn_share_list)
     public void validateAndShareList(){
         if(shareEmailList.size() == 0){
             Toast.makeText(getContext(), "Add emails first!", Toast.LENGTH_LONG).show();
             return;
         }
-
-        String[] arrEmailsTo = new String[shareEmailList.size()];
-        FirebaseDatabase.getInstance().getReference("/g_list_items/"+mGroceryList.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot == null || dataSnapshot.equals("")) {
-                    Toast.makeText(getContext(),
-                            "You must have items in the list", Toast.LENGTH_SHORT).show();
-                } else {
-                    String body = EmailUtil.buildContent(mGroceryList, dataSnapshot);
-                    sentEmail(body, arrEmailsTo);
+        if(isGLSelected()){
+            Log.d(TAG,"gl email was selected");
+            DatabaseReference reference;
+            String groceryListId = mGroceryList.getId();
+            mGroceryList.setId(null);
+            for(User user: shareGLUserList){
+                reference = FirebaseDatabase.getInstance().getReference(user.getId()+"/my_list/"+groceryListId);
+                reference.setValue(mGroceryList);
+            }
+            Toast.makeText(getContext(), "List was shared successfully!", Toast.LENGTH_LONG).show();
+            goBack();
+        } else {
+            String[] arrEmailsTo = new String[shareEmailList.size()];
+            FirebaseDatabase.getInstance().getReference("/g_list_items/"+mGroceryList.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot == null || dataSnapshot.equals("")) {
+                        Toast.makeText(getContext(),
+                                "You must have items in the list", Toast.LENGTH_SHORT).show();
+                    } else {
+                        String body = EmailUtil.buildContent(mGroceryList, dataSnapshot);
+                        sentEmail(body, arrEmailsTo);
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(MyApplication.getAppContext(),
-                        "Could not send email.", Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(MyApplication.getAppContext(),
+                            "Could not send email.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
-    /**
-     * Sending the email
-     * @param body of the email
-     * @param emailToList the list of users we want to share the list with
-     */
     private void sentEmail(String body, String[] emailToList){
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
         emailIntent.setData(Uri.parse("mailto:"));
@@ -226,9 +226,6 @@ public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdap
         }
     }
 
-    /**
-     * going back to the previous page
-     */
     @OnClick(R.id.btn_cancel_share)
     public void goBack(){
         this.getFragmentManager().popBackStack();

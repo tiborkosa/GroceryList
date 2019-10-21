@@ -39,6 +39,47 @@
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/tv_share_method_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="@string/sharing_methods"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold|italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dl_item_holder" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_share_method_label">
+
+            <RadioButton
+                android:id="@+id/rb_gl_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:textSize="16sp"
+                android:layout_marginRight="16dp"
+                android:text="@string/grocery_user" />
+
+            <RadioButton
+                android:id="@+id/rb_gl_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="@string/Email" />
+
+        </RadioGroup>
+
+        <TextView
             android:id="@+id/tv_dlg_add_user_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,7 +90,7 @@
             android:textStyle="bold|italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dl_item_holder" />
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
         <View
             android:id="@+id/v_line"

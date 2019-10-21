@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(isTablet){
             mAppBarConfiguration = new AppBarConfiguration.Builder(
                     R.id.nav_settings,
-                    R.id.nav_user_profile, R.id.nav_share, R.id.nav_messages, R.id.nav_list)
+                    R.id.nav_user_profile, R.id.nav_share, R.id.nav_list)
                     .setDrawerLayout(drawer)
                     .build();
 
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             mAppBarConfiguration = new AppBarConfiguration.Builder(
                     R.id.nav_home, R.id.nav_settings,
-                    R.id.nav_user_profile, R.id.nav_share, R.id.nav_messages, R.id.nav_list)
+                    R.id.nav_user_profile, R.id.nav_share, R.id.nav_list)
                     .setDrawerLayout(drawer)
                     .build();
         }
@@ -216,9 +216,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_settings:
                 Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.nav_settings);
-                break;
-            case R.id.nav_messages:
-                Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.nav_messages);
                 break;
             case R.id.nav_authenticate:
 

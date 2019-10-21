@@ -19,6 +19,9 @@ import com.example.grocerylist.entities.User;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * User fragment for the profile
+ */
 public class UserFragment extends Fragment {
 
     private UserViewModel userViewModel;
@@ -26,6 +29,13 @@ public class UserFragment extends Fragment {
     @BindView(R.id.tv_user_email) TextView mUserEmail;
     @BindView(R.id.iv_user_pic) ImageView mUserProfileImage;
 
+    /**
+     * inflating the layout
+     * @param inflater layout inflater
+     * @param container container where we want to show the fragment
+     * @param savedInstanceState
+     * @return inflated view
+     */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         userViewModel =
@@ -33,13 +43,10 @@ public class UserFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_user, container, false);
         ButterKnife.bind(this, root);
 
-        userViewModel.getUser().observe(this, new Observer<User>() {
-            @Override
-            public void onChanged(@Nullable User user) {
-                mUserName.setText(user.getName());
-                if(user.getEmail() != null)
-                    mUserEmail.setText(user.getEmail());
-            }
+        userViewModel.getUser().observe(this, user -> {
+            mUserName.setText(user.getName());
+            if(user.getEmail() != null)
+                mUserEmail.setText(user.getEmail());
         });
         return root;
     }

@@ -54,9 +54,6 @@ import static com.example.grocerylist.util.Constants.GL_POSITION;
 import static com.example.grocerylist.util.Constants.GROCERY_LIST_ID;
 import static com.example.grocerylist.ui.grocerylist.GroceryListViewModel.listRef;
 
-/**
- * Grocery List fragment implements the necessary interfaces
- */
 public class GroceryListFragment
         extends Fragment
         implements NewGroceryListItemDialog.DialogSubmitListener,
@@ -68,8 +65,6 @@ public class GroceryListFragment
     @BindView(R.id.tv_no_gl_items) TextView mNoItems;
     @BindView(R.id.fab_grocery_list)
     FloatingActionButton mFab;
-    @BindView(R.id.adView)
-    AdView mAdview;
 
     private static GroceryListViewModel viewModel;
     private List<GroceryList> gList = new ArrayList<>();
@@ -106,23 +101,6 @@ public class GroceryListFragment
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new MyItemTouchHelper(GroceryListFragment.this));
         itemTouchHelper.attachToRecyclerView(recyclerView);
-
-        MobileAds.initialize(getContext(),"ca-app-pub-3940256099942544/3347511713");
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
-        mAdview.setAdListener(new AdListener() {
-            @Override
-            public void onAdFailedToLoad(int i) {
-                super.onAdFailedToLoad(i);
-                Log.d(TAG, "Failed to load ad " + i);
-            }
-
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                Log.d(TAG, "onAdLoaded");
-            }
-        });
-        mAdview.loadAd(adRequest);
 
         return root;
     }

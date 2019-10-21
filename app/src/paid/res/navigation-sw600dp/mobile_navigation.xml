@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_list">
 
     <fragment
         android:id="@+id/nav_home"
@@ -11,7 +11,6 @@
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_grocery_list" >
     </fragment>
-
     <fragment
         android:id="@+id/nav_share"
         android:name="com.example.grocerylist.ui.share.ShareFragment"
@@ -32,8 +31,14 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_messages"
+        android:name="com.example.grocerylist.ui.messages.MessagesFragment"
+        android:label="@string/menu_messages"
+        tools:layout="@layout/fragment_messages" />
+
+    <fragment
         android:id="@+id/nav_list"
         android:name="com.example.grocerylist.ui.listItems.ListItemsFragment"
-        android:label="@string/menu_grocery_list_item"
+        android:label="@string/menu_send"
         tools:layout="@layout/fragment_list_items" />
 </navigation>

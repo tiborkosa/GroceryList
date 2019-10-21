@@ -33,6 +33,12 @@ import static com.example.grocerylist.util.Constants.GL_NAME;
 import static com.example.grocerylist.util.Constants.GL_POSITION;
 import static com.example.grocerylist.util.Constants.GROCERY_LIST_ID;
 
+/**
+ * Grocery list dialog used to add or edit grocery list
+ * Uses datepicker and custom date formatter
+ *
+ * NOTE: DialogSubmitListener interface needs to be implemented in the calling class
+ */
 public class NewGroceryListItemDialog extends DialogFragment {
 
     /**
@@ -64,6 +70,13 @@ public class NewGroceryListItemDialog extends DialogFragment {
         return frag;
     }
 
+    /**
+     * On create view
+     * @param inflater layout inflater
+     * @param container container where we want to inflate the fragment
+     * @param savedInstanceState saved instance state
+     * @return view of the inflated fragment
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -74,29 +87,29 @@ public class NewGroceryListItemDialog extends DialogFragment {
         return view;
     }
 
+    /**
+     * onViewCreated to set up fields
+     * @param view inflated view
+     * @param savedInstanceState saved instance state
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         getDialog().setTitle(getArguments().getString(DLG_TITLE, "Dialog"));
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-
+        getDialog().getWindow().getAttributes().windowAnimations = R.style.DialogWindowAnim;
         mGLName.setText(getArguments().getString(GL_NAME, ""));
         mDueDate.setText(getArguments().getString(GL_DUE_DATE, ""));
         int priority = getArguments().getInt(DL_PRIORITY,0);
         mPriority.setSelection(priority);
-        if(getArguments().containsKey(GL_POSITION)){
-            mSubmit.setText("Edit");
-        }
-
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        //getDialog().getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-    }
-
+    /**
+     * Add new item
+     * Binded by butterknife onClick
+     * Creates a grocery list item and calls the listener
+     */
     @Nullable @OnClick(R.id.btn_gl_dialog_submit)
     public void onAddNewGLItem(){
         String listName = mGLName.getText().toString();
@@ -124,11 +137,18 @@ public class NewGroceryListItemDialog extends DialogFragment {
         }
     }
 
+    /**
+     * Closing the dialog
+     */
     @Nullable @OnClick(R.id.btn_dlg_cancel)
     public void onCancelDialog(){
         dismiss();
     }
 
+    /**
+     * Opening the calendar to populate the field
+     * uses datepicker and date formatter
+     */
     @Nullable @OnClick(R.id.tv_dialog_date)
     public void onOpenCalendar(){
         Calendar calendar = MyDateFormat.getDateNow(Calendar.getInstance().getTime());

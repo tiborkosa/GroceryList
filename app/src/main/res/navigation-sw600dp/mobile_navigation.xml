@@ -6,6 +6,12 @@
     app:startDestination="@+id/nav_list">
 
     <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.grocerylist.ui.grocerylist.GroceryListFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_grocery_list" >
+    </fragment>
+    <fragment
         android:id="@+id/nav_share"
         android:name="com.example.grocerylist.ui.share.ShareFragment"
         android:label="@string/menu_share"
@@ -23,12 +29,6 @@
         android:label="@string/menu_tools"
         tools:layout="@xml/gl_preferences" >
     </fragment>
-
-    <fragment
-        android:id="@+id/nav_messages"
-        android:name="com.example.grocerylist.ui.messages.MessagesFragment"
-        android:label="@string/menu_messages"
-        tools:layout="@layout/fragment_messages" />
 
     <fragment
         android:id="@+id/nav_list"

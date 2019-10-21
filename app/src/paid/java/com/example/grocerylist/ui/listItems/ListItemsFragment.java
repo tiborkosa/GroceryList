@@ -52,9 +52,6 @@ import static com.example.grocerylist.util.Constants.ITEM_QUANTITY;
 import static com.example.grocerylist.util.Constants.ITEM_UNIT_OF_MEASURE;
 import static com.example.grocerylist.ui.listItems.ListItemsViewModel.List_Items_Ref;
 
-/**
- * List item fragment that implements the needed interfaces
- */
 public class ListItemsFragment
         extends Fragment
         implements NewListItemDialog.DialogSubmitListener,
@@ -64,11 +61,6 @@ public class ListItemsFragment
     private ListItemsViewModel viewModel;
     private static final String TAG = ListItemsFragment.class.getSimpleName();
 
-    /**
-     * for getting a new instance of the fragment
-     * @param args to set up needed fields
-     * @return new fragment
-     */
     public static ListItemsFragment getInstance(Bundle args) {
         ListItemsFragment frag = new ListItemsFragment();
         frag.setArguments(args);
@@ -81,16 +73,7 @@ public class ListItemsFragment
     TextView mNoItems;
     @BindView(R.id.fab_add_list_item)
     FloatingActionButton mFab;
-    @BindView(R.id.adViewList)
-    AdView mAdview;
 
-    /**
-     * onCreateView to inflate the view
-     * @param inflater layout inflater
-     * @param container where we want to inflate the fragment
-     * @param savedInstanceState saved instance state
-     * @return new inflated view
-     */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_list_items, container, false);
@@ -113,30 +96,9 @@ public class ListItemsFragment
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new MyItemTouchHelper(ListItemsFragment.this));
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
-        MobileAds.initialize(getContext(),"ca-app-pub-3940256099942544/3347511713");
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
-        mAdview.setAdListener(new AdListener() {
-            @Override
-            public void onAdFailedToLoad(int i) {
-                super.onAdFailedToLoad(i);
-                Log.d(TAG, "Failed to load ad " + i);
-            }
-
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                Log.d(TAG, "onAdLoaded");
-            }
-        });
-        mAdview.loadAd(adRequest);
-
         return root;
     }
 
-    /**
-     * when the activity created we attach the live data observer and populate the fields
-     * @param savedInstanceState
-     */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -154,10 +116,6 @@ public class ListItemsFragment
         );
     }
 
-    /**
-     * Open dialog to create a new list item
-     * Using butterknife for binding the onclick
-     */
     @OnClick(R.id.fab_add_list_item)
     public void onNewItemClicked() {
         Log.d(TAG, " fab is clicked.");
@@ -166,10 +124,6 @@ public class ListItemsFragment
         openDialog(args);
     }
 
-    /**
-     * helper method to open the dialog
-     * @param args
-     */
     private void openDialog(Bundle args){
         FragmentManager fm = getFragmentManager();
         NewListItemDialog dialog = NewListItemDialog
@@ -178,9 +132,6 @@ public class ListItemsFragment
         dialog.show(fm, "listItem_dlg");
     }
 
-    /**
-     * adding animation
-     */
     @Override
     public void onResume() {
         super.onResume();
@@ -189,11 +140,6 @@ public class ListItemsFragment
         mFab.startAnimation(animation);
     }
 
-    /**
-     * overridden interface of the dialog's callback
-     * @param listItem item that was created or updated
-     * @param position position of the updated item or -1 if new
-     */
     @Override
     public void onDialogSubmit(ListItem listItem, int position) {
         String listId = listItem.getId();
@@ -223,11 +169,6 @@ public class ListItemsFragment
         }
     }
 
-    /**
-     * overridden interface of @MyTouchListener
-     * when left swiped item will be deleted
-     * @param position of the item swiped
-     */
     @Override
     public void onLeftSwipe(int position) {
         Log.d(TAG, "Left Swipe happened to delete");
@@ -247,11 +188,6 @@ public class ListItemsFragment
 
     }
 
-    /**
-     * overridden interface of @MyTouchListener
-     * when right swiped item will be edited
-     * @param position of the item swiped
-     */
     @Override
     public void onRightSwipe(int position) {
         Log.d(TAG, "Right Swipe happened to edit item");
@@ -262,6 +198,7 @@ public class ListItemsFragment
             return;
         }
 
+        Log.d("QQQ", toUpdateItem.toString());
         Bundle args = new Bundle();
         args.putString(ITEM_ID, toUpdateItem.getId());
         args.putString(ITEM_NAME, toUpdateItem.getName());
@@ -273,11 +210,6 @@ public class ListItemsFragment
         openDialog(args);
     }
 
-    /**
-     * overridden interface of the @ListItemRecyclerViewAdapter
-     * @param listItem that was purchased or un purchased
-     * @param position position of the item
-     */
     @Override
     public void onCheckBoxClicked(ListItem listItem, int position) {
         Log.d(TAG, "listItem: " + listItem.toString() );
@@ -292,11 +224,6 @@ public class ListItemsFragment
         }
     }
 
-    /**
-     * helper function to avoid reference issues when setting the id to null
-     * @param oldItem to be transformed
-     * @return new ListItem created
-     */
     private ListItem copyListItem(ListItem oldItem){
         return new ListItem(
                 oldItem.getId(),

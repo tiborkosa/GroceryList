@@ -12,6 +12,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+/**
+ * This is a helper class that reduces the amount of firebase queries
+ * This is also allows the list to be updated when the data is changed in the db
+ * For example when the list is shared by other user
+ */
 public class FirebaseQueryLiveData extends LiveData<DataSnapshot> {
 
     private static final String TAG = FirebaseQueryLiveData.class.getSimpleName();
@@ -20,6 +25,10 @@ public class FirebaseQueryLiveData extends LiveData<DataSnapshot> {
     private boolean listenerRemovePending = false;
 
     private final Handler handler = new Handler();
+
+    /**
+     * Runnable to remove the listener
+     */
     private final Runnable removeListener = new Runnable() {
         @Override
         public void run() {
@@ -28,14 +37,26 @@ public class FirebaseQueryLiveData extends LiveData<DataSnapshot> {
         }
     };
 
+    /**
+     * Constructor for query
+     * @param query of the item we want to query
+     */
     public FirebaseQueryLiveData(Query query){
         this.query = query;
     }
 
+    /**
+     * Constructor for reference
+     * @param ref that we want to pull the data from
+     */
     public FirebaseQueryLiveData(DatabaseReference ref){
         this.query = ref;
     }
 
+    /**
+     * Checks if the live data is active or not
+     * Adds or removes the listener
+     */
     @Override
     protected void onActive() {
         super.onActive();
@@ -49,6 +70,10 @@ public class FirebaseQueryLiveData extends LiveData<DataSnapshot> {
         listenerRemovePending = false;
     }
 
+    /**
+     * Starts the runnable and removes the listener after 2 seconds
+     * this is usefull when the device is rotated and we wont  query the db again
+     */
     @Override
     protected void onInactive() {
         super.onInactive();
@@ -57,13 +82,24 @@ public class FirebaseQueryLiveData extends LiveData<DataSnapshot> {
         listenerRemovePending = true;
     }
 
+    /**
+     * Value listener of firebase
+     */
     private class MyValueEventListener implements ValueEventListener{
 
+        /**
+         * When the data is changed
+         * @param dataSnapshot of the collection
+         */
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             setValue(dataSnapshot);
         }
 
+        /**
+         * when the request got cancelled
+         * @param databaseError that describes what happened
+         */
         @Override
         public void onCancelled(@NonNull DatabaseError databaseError) {
             Log.d(TAG, "Could not listened to query: " + databaseError.getMessage());

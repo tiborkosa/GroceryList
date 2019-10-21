@@ -17,6 +17,10 @@
             android:icon="@drawable/ic_settings_applications_black_24dp"
             android:title="@string/menu_tools" />
         <item
+            android:id="@+id/nav_messages"
+            android:icon="@drawable/ic_message_black_24dp"
+            android:title="@string/menu_messages" />
+        <item
             android:id="@+id/nav_authenticate"
             android:icon="@drawable/ic_power_settings_new_black_24dp"
             android:title="@string/menu_login" />

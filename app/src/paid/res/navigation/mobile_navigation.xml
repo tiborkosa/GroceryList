@@ -32,6 +32,12 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_messages"
+        android:name="com.example.grocerylist.ui.messages.MessagesFragment"
+        android:label="@string/menu_messages"
+        tools:layout="@layout/fragment_messages" />
+
+    <fragment
         android:id="@+id/nav_list"
         android:name="com.example.grocerylist.ui.listItems.ListItemsFragment"
         android:label="@string/menu_grocery_list_item"

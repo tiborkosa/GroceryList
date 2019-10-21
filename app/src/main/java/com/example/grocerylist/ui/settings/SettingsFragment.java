@@ -2,20 +2,27 @@ package com.example.grocerylist.ui.settings;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceScreen;
 
 import com.example.grocerylist.R;
 
+/**
+ * Settings fragment
+ * Changing the measurements
+ * resetting to "factory" settings is not implemented (coming to version 2.0)
+ */
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener{
 
-
+    /**
+     * creating the preferences
+     * @param savedInstanceState saved instance state
+     * @param rootKey some key
+     */
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.gl_preferences);
@@ -34,6 +41,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         }
     }
 
+    /**
+     * setting up the summary of the list preference
+     * @param preference that needs to have the summary set
+     * @param value summary
+     */
     private void setPreferenceSummary(Preference preference, String value){
         if(preference instanceof ListPreference){
             ListPreference listPreference = (ListPreference)preference;
@@ -44,10 +56,14 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         }
     }
 
+    /**
+     * Listener when the preferences change
+     * @param sharedPreferences that changed
+     * @param key that changed
+     */
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         Preference preference = findPreference(key);
-        Log.d("sdf", "ssss" +key);
         if(null != preference) {
             if(!(preference instanceof CheckBoxPreference)){
                 String value = sharedPreferences.getString(preference.getKey(), "");
@@ -56,12 +72,19 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         }
     }
 
+    /**
+     * Shared preference created
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
 
+    /**
+     * cleaning up
+     */
     @Override
     public void onDestroyView() {
         super.onDestroyView();
