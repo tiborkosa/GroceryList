@@ -14,13 +14,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_20"
-            android:paddingLeft="@dimen/padding_8"
-            android:paddingRight="0dp"
+            android:paddingStart="@dimen/padding_8"
             android:textColor="@color/colorPrimaryDark"
             android:textStyle="bold|italic"
             android:text="@string/shared_list"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingEnd="0dp" />
 
         <RelativeLayout
             android:id="@+id/dl_item_holder"
@@ -39,11 +39,11 @@
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/tv_share_method_label"
+            android:id="@+id/tv_dlg_add_user_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_20"
-            android:text="@string/sharing_methods"
+            android:text="@string/add_users"
             android:textSize="@dimen/text_size_20"
             android:textColor="@color/colorPrimaryDark"
             android:textStyle="bold|italic"
@@ -51,51 +51,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dl_item_holder" />
 
-        <RadioGroup
-            android:id="@+id/radioGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/margin_20"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_share_method_label">
-
-            <RadioButton
-                android:id="@+id/rb_gl_user"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:textSize="@dimen/text_size_16"
-                android:layout_marginRight="@dimen/margin_16"
-                android:text="@string/grocery_user" />
-
-            <RadioButton
-                android:id="@+id/rb_gl_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_16"
-                android:text="@string/Email" />
-
-        </RadioGroup>
-
-        <TextView
-            android:id="@+id/tv_dlg_add_user_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/add_users"
-            android:textSize="20sp"
-            android:textColor="@color/colorPrimaryDark"
-            android:textStyle="bold|italic"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
-
         <View
             android:id="@+id/v_line"
             android:layout_width="match_parent"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/margin_8"
             android:layout_height="1dp"
             android:background="@color/colorPrimaryDark"
             app:layout_constraintTop_toBottomOf="@+id/tv_dlg_add_user_label"/>

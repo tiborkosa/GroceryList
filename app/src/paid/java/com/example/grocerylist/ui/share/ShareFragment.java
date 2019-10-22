@@ -46,6 +46,10 @@ import static com.example.grocerylist.util.Constants.GL_DUE_DATE;
 import static com.example.grocerylist.util.Constants.GL_NAME;
 import static com.example.grocerylist.util.Constants.GROCERY_LIST_ID;
 
+/**
+ * Sharing the list
+ * for the paid version where users can share among the list not just by email
+ */
 public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdapter.OnItemClicked {
 
     public static final String EMAILS = "emails";
@@ -63,12 +67,22 @@ public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdap
 
     private static final String TAG = ShareFragment.class.getSimpleName();
 
+    /**
+     * Getting a new instance of the fragment
+     * @param args
+     * @return
+     */
     public static ShareFragment newInstance(Bundle args){
         ShareFragment frag = new ShareFragment();
         frag.setArguments(args);
         return frag;
     }
 
+    /**
+     * on view created we set up the needed fields
+     * @param view inflated view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -88,6 +102,13 @@ public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdap
         mRecyclerView.setAdapter(adapter);
     }
 
+    /**
+     * on create view we inflate the layout
+     * @param inflater layout inflater
+     * @param container where we want to inflate the fragment
+     * @param savedInstanceState
+     * @return inflated view
+     */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -103,6 +124,10 @@ public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdap
         return root;
     }
 
+    /**
+     * overridden interface of the @ShareEmailRecycleViewAdapter
+     * @param position of the item to be deleted
+     */
     @Override
     public void onDeleteItem(int position) {
         shareEmailList.remove(position);
@@ -112,6 +137,10 @@ public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdap
         updateRecyclerView();
     }
 
+    /**
+     * Adding new email to the list
+     * We check if it is a valid email
+     */
     @OnClick(R.id.btn_add_email)
     public void onAddEmailClicked(){
         InputMethodManager inputManager = (InputMethodManager) this.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -133,7 +162,7 @@ public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdap
                             shareEmailList.add(email);
                             mEmailSearch.setText("");
                             updateRecyclerView();
-                            Log.d(TAG, "user was found " + user.toString());
+                            Timber.d( "user was found " + user.toString());
                         } catch (Exception e){
                             Toast.makeText(getContext(), "User is not registered.", Toast.LENGTH_LONG).show();
                         }
@@ -141,7 +170,7 @@ public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdap
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Log.d(TAG, "Error while retrieving list" + databaseError.getMessage());
+                        Timber.d( "Error while retrieving list" + databaseError.getMessage());
                     }
                 });
             } else {
@@ -154,21 +183,37 @@ public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdap
         }
     }
 
+    /**
+     * Helper function to update the view
+     */
     private void updateRecyclerView(){
-        Log.d(TAG,"updateRecyclerView");
+        Timber.d("updateRecyclerView");
         adapter = new ShareEmailRecycleViewAdapter(shareEmailList, this);
         mRecyclerView.setAdapter(adapter);
     }
 
+    /**
+     * Checking if the entered email is valid or not
+     * @param email to be validated
+     * @return true if valid, false if not
+     */
     private boolean isValidEmail(String email) {
         String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
         return email.matches(regex);
     }
 
+    /**
+     * Checking which radio button selected
+     * @return
+     */
     private boolean isGLSelected(){
         return mShareMethod.getCheckedRadioButtonId() == R.id.rb_gl_user;
     }
 
+    /**
+     * Sharing the list
+     * We are using the installed email apps and sharing other list via this app
+     */
     @OnClick(R.id.btn_share_list)
     public void validateAndShareList(){
         if(shareEmailList.size() == 0){
@@ -176,7 +221,7 @@ public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdap
             return;
         }
         if(isGLSelected()){
-            Log.d(TAG,"gl email was selected");
+            Timber.d("gl email was selected");
             DatabaseReference reference;
             String groceryListId = mGroceryList.getId();
             mGroceryList.setId(null);
@@ -209,6 +254,11 @@ public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdap
         }
     }
 
+    /**
+     * Sending the email
+     * @param body of the email
+     * @param emailToList the list of users we want to share the list with
+     */
     private void sentEmail(String body, String[] emailToList){
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
         emailIntent.setData(Uri.parse("mailto:"));
@@ -226,6 +276,9 @@ public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdap
         }
     }
 
+    /**
+     * going back to the previous page
+     */
     @OnClick(R.id.btn_cancel_share)
     public void goBack(){
         this.getFragmentManager().popBackStack();

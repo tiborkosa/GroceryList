@@ -1,7 +1,5 @@
 package com.example.grocerylist.ui.grocerylist;
 
-import android.util.Log;
-
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
@@ -16,6 +14,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import timber.log.Timber;
 
 public class GroceryListViewModel extends ViewModel {
 
@@ -41,14 +41,14 @@ public class GroceryListViewModel extends ViewModel {
          */
         @Override
         public List<GroceryList> apply(DataSnapshot dataSnapshot) {
-            Log.d(TAG, "Parsing grocery list dataSnapshot.");
+            Timber.d("Parsing grocery list dataSnapshot.");
             List<GroceryList> groceryLists = new ArrayList<>();
             for(DataSnapshot data: dataSnapshot.getChildren()){
                 GroceryList groceryList = data.getValue(GroceryList.class);
                 groceryList.setId(data.getKey());
                 groceryLists.add(groceryList);
             }
-            Log.d(TAG, "Size of the grocery list " + groceryLists.size());
+            Timber.d( "Size of the grocery list %s", groceryLists.size());
             return groceryLists;
         }
     }
@@ -58,7 +58,7 @@ public class GroceryListViewModel extends ViewModel {
      * @return
      */
     public LiveData<List<GroceryList>> getGroceryList() {
-        Log.d(TAG,"Getting GroceryList ");
+        Timber.d("Getting GroceryList ");
         return groceryListLiveData;
     }
 

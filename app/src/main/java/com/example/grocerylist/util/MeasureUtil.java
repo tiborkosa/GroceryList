@@ -1,37 +1,42 @@
 package com.example.grocerylist.util;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 
 import androidx.preference.PreferenceManager;
 
 import com.example.grocerylist.R;
 
+/**
+ * measurement util to get the required measurements
+ * this is needed for the shared preferences
+ */
 public class MeasureUtil {
 
-    private static Context context = MyApplication.getAppContext();
-
+    /**
+     * getting either the metric or imperial measurements
+     * @return
+     */
     public static String[] getMeasurements(){
 
         SharedPreferences sharedPreferences = PreferenceManager.
-                getDefaultSharedPreferences(context);
+                getDefaultSharedPreferences(MyApplication.getAppContext());
 
         String[] array = null;
         String measureString = sharedPreferences.
-                getString(context.
+                getString(MyApplication.getAppContext().
                         getResources().
                         getString(R.string.pref_measure_key), null);
 
         if(measureString != null) {
             try {
-                int id = context.
+                int id = MyApplication.getAppContext().
                         getResources().
                         getIdentifier(measureString, "array",
                                 MyApplication
                                         .getAppContext()
                                         .getPackageName()
                         );
-                array =  context.getResources().getStringArray(id);
+                array =  MyApplication.getAppContext().getResources().getStringArray(id);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -39,7 +44,11 @@ public class MeasureUtil {
         return array == null ? getDefault() : array;
     }
 
+    /**
+     * at the start we always want to get the imperial measurements
+     * @return
+     */
     private static String[] getDefault(){
-        return context.getResources().getStringArray(R.array.unit_measure_imperial);
+        return MyApplication.getAppContext().getResources().getStringArray(R.array.unit_measure_imperial);
     }
 }

@@ -4,7 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -15,14 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.grocerylist.R;
 import com.example.grocerylist.util.MyApplication;
 
+import timber.log.Timber;
+
 /**
  * Helper class to perform left and right swipe on the recycler view
  */
 public class MyItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 
     private static final String TAG = MyItemTouchHelper.class.getSimpleName();
-    private Drawable icon;
-    private ColorDrawable background;
     private OnItemTouchActionListener mCallback;
 
     /**
@@ -64,10 +63,10 @@ public class MyItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         if(direction == ItemTouchHelper.LEFT){
             mCallback.onLeftSwipe(viewHolder.getAdapterPosition());
-            Log.d(TAG, "left swipe");
+            Timber.d( "left swipe");
         }else if(direction == ItemTouchHelper.RIGHT){
             mCallback.onRightSwipe(viewHolder.getAdapterPosition());
-            Log.d(TAG, "right swipe");
+            Timber.d("right swipe");
         }
     }
 
@@ -96,9 +95,9 @@ public class MyItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 
         View itemView = viewHolder.itemView;
         int backgroundCornerOffset = 20; //so background is behind the rounded corners of itemView
-        icon = ContextCompat.getDrawable(MyApplication.getAppContext(),
+        Drawable icon = ContextCompat.getDrawable(MyApplication.getAppContext(),
                 R.drawable.ic_edit_24px);
-        background = new ColorDrawable(Color.TRANSPARENT);
+        ColorDrawable background = new ColorDrawable(Color.TRANSPARENT);
 
         if(dX > 0){
             background = new ColorDrawable(MyApplication.getAppContext().getResources().getColor(R.color.colorPrimary));

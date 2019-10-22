@@ -1,6 +1,5 @@
 package com.example.grocerylist.adapters;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 /**
  * Recycler view adapter for displaying the list of user emails to share the list with
@@ -42,7 +42,7 @@ public class ShareEmailRecycleViewAdapter extends RecyclerView.Adapter<ShareEmai
      * @param callback of the item clicked
      */
     public ShareEmailRecycleViewAdapter(List<String> emailList, OnItemClicked callback ){
-        Log.d(TAG, "ShareEmailRecycleViewAdapter");
+        Timber.d( "ShareEmailRecycleViewAdapter");
         mListItems = emailList;
         int size = 0;
         if(emailList != null){
@@ -61,7 +61,7 @@ public class ShareEmailRecycleViewAdapter extends RecyclerView.Adapter<ShareEmai
     @NonNull
     @Override
     public ListItemsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.d(TAG,"onCreateViewHolder");
+        Timber.d("onCreateViewHolder");
         View view = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.rv_share_email_item, parent, false);

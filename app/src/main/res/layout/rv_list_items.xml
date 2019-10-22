@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp" >
+    android:padding="@dimen/padding16" >
 
     <TextView
         android:id="@+id/tv_list_item_name"
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_size_20"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,8 +21,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/amount"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp"
+        android:textSize="@dimen/text_size_16"
+        android:layout_marginTop="@dimen/padding_8"
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintStart_toStartOf="@+id/tv_list_item_name"
         app:layout_constraintTop_toBottomOf="@+id/tv_list_item_name" />
@@ -31,11 +31,11 @@
         android:id="@+id/tv_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginLeft="@dimen/padding16"
+        android:layout_marginStart="@dimen/padding16"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp"
+        android:textSize="@dimen/text_size_16"
+        android:layout_marginTop="@dimen/margin_8"
         app:layout_constraintStart_toEndOf="@+id/tv_measure"
         app:layout_constraintTop_toBottomOf="@+id/tv_list_item_name" />
 
@@ -43,11 +43,11 @@
         android:id="@+id/tv_measure_unit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginLeft="@dimen/margin_8"
+        android:layout_marginStart="@dimen/margin_8"
+        android:layout_marginTop="@dimen/margin_8"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="16sp"
+        android:textSize="@dimen/text_size_16"
         app:layout_constraintStart_toEndOf="@+id/tv_amount"
         app:layout_constraintTop_toBottomOf="@+id/tv_list_item_name" />
 

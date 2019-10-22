@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp" >
+    android:layout_margin="@dimen/margin_4" >
 
     <TextView
         android:id="@+id/tv_rv_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:textSize="16sp"
+        android:layout_marginLeft="@dimen/margin_20"
+        android:textSize="@dimen/text_size_16"
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/delete_item"
         android:background="@color/fui_transparent"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="@dimen/margin_20"
         app:srcCompat="@drawable/ic_delete_black_24px"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

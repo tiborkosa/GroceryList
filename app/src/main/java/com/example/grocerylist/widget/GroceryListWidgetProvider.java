@@ -6,7 +6,6 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.example.grocerylist.MainActivity;
@@ -14,9 +13,17 @@ import com.example.grocerylist.R;
 
 /**
  * Implementation of App Widget functionality.
+ *
+ * This is just a simple widget to open the app
  */
 public class GroceryListWidgetProvider extends AppWidgetProvider {
 
+    /**
+     * updating the widget
+     * @param context app contecxt
+     * @param appWidgetManager widget manager
+     * @param appWidgetId widget id
+     */
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
         // Construct the RemoteViews object
@@ -30,6 +37,11 @@ public class GroceryListWidgetProvider extends AppWidgetProvider {
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
+    /**
+     * when receiving update the widget
+     * @param context app context
+     * @param intent that stores the data
+     */
     @Override
     public void onReceive(Context context, Intent intent) {
         final String action = intent.getAction();
@@ -43,6 +55,12 @@ public class GroceryListWidgetProvider extends AppWidgetProvider {
         super.onReceive(context, intent);
     }
 
+    /**
+     * update all widgets
+     * @param context appcontext
+     * @param appWidgetManager widget manager
+     * @param appWidgetIds widget ids
+     */
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
@@ -51,11 +69,13 @@ public class GroceryListWidgetProvider extends AppWidgetProvider {
         }
     }
 
+    // not used
     @Override
     public void onEnabled(Context context) {
         // Enter relevant functionality for when the first widget is created
     }
 
+    // not used
     @Override
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled

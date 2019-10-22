@@ -15,10 +15,21 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.grocerylist.R;
 
+/**
+ * Messages fragment is used to gl users to communicate
+ * by sending messages
+ */
 public class MessagesFragment extends Fragment {
 
     private MessagesViewModel messagesViewModel;
 
+    /**
+     * onCreateView to inflate the view and add the observer
+     * @param inflater layout inflater
+     * @param container where we want to inflate the layout
+     * @param savedInstanceState
+     * @return inflated view
+     */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         messagesViewModel =
@@ -28,7 +39,6 @@ public class MessagesFragment extends Fragment {
         messagesViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                Log.d("SD", "text is " + s);
                 textView2.setText(s);
             }
         });

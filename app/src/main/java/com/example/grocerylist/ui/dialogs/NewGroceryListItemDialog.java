@@ -1,5 +1,6 @@
 package com.example.grocerylist.ui.dialogs;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -80,7 +81,7 @@ public class NewGroceryListItemDialog extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_dialog_new_gl,null);
+        @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.fragment_dialog_new_gl,null);
         setStyle(DialogFragment.STYLE_NORMAL, R.style.dialog);
         ButterKnife.bind(this, view);
 

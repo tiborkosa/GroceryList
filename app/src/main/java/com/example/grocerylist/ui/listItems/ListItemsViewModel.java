@@ -1,7 +1,6 @@
 package com.example.grocerylist.ui.listItems;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -17,6 +16,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import timber.log.Timber;
 
 import static com.example.grocerylist.util.Constants.GROCERY_LIST_ID;
 
@@ -41,7 +42,7 @@ public class ListItemsViewModel extends ViewModel {
             String pID = arg.getString(GROCERY_LIST_ID, null);
             if(pID != null){
                 List_Items_Ref = FirebaseDatabase.getInstance().getReference("/g_list_items/"+pID);
-                Log.d(TAG, "id is: "+ pID);
+                Timber.d("id is: %s", pID);
 
                 mListItems = new MutableLiveData<>();
                 List_Items_Ref
@@ -59,7 +60,7 @@ public class ListItemsViewModel extends ViewModel {
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
-                                Log.d(TAG, "Error while retrieving list" + databaseError.getMessage());
+                                Timber.d( "Error while retrieving list%s", databaseError.getMessage());
                             }
                         });
             }

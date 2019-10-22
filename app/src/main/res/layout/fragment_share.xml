@@ -7,27 +7,29 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp">
+        android:layout_margin="@dimen/margin_16">
 
         <TextView
             android:id="@+id/list_item_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:paddingLeft="8dp"
+            android:textSize="@dimen/text_size_20"
+            android:paddingLeft="@dimen/padding_8"
             android:paddingRight="0dp"
             android:textColor="@color/colorPrimaryDark"
             android:textStyle="bold|italic"
             android:text="@string/shared_list"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingStart="@dimen/padding_8"
+            android:paddingEnd="0dp" />
 
         <RelativeLayout
             android:id="@+id/dl_item_holder"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_corner_bg"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/margin_8"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/list_item_label">
@@ -42,9 +44,9 @@
             android:id="@+id/tv_dlg_add_user_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/margin_20"
             android:text="@string/add_users"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_size_20"
             android:textColor="@color/colorPrimaryDark"
             android:textStyle="bold|italic"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,24 +56,24 @@
         <View
             android:id="@+id/v_line"
             android:layout_width="match_parent"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/margin_8"
             android:layout_height="1dp"
             android:background="@color/colorPrimaryDark"
             app:layout_constraintTop_toBottomOf="@+id/tv_dlg_add_user_label"/>
 
         <EditText
             android:id="@+id/et_email_search"
-            android:layout_width="200dp"
+            android:layout_width="@dimen/edittext_width_200"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:autofillHints="no"
+            android:layout_marginTop="@dimen/margin_16"
             android:imeOptions = "flagNoFullscreen"
             android:hint="@string/email"
             android:inputType="textWebEmailAddress"
             app:layout_constraintEnd_toStartOf="@+id/btn_add_email"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/v_line" />
+            app:layout_constraintTop_toBottomOf="@+id/v_line"
+            android:importantForAutofill="no" />
 
         <Button
             android:id="@+id/btn_add_email"
@@ -80,7 +82,7 @@
             android:text="@string/btn_add"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:textColor="@color/colorAccent"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size_16"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -91,7 +93,7 @@
             android:id="@+id/rv_share_email_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/margin_16"
             app:layout_constraintBottom_toTopOf="@+id/btn_share_list"
             app:layout_constraintTop_toBottomOf="@+id/et_email_search" />
 
@@ -99,11 +101,11 @@
             android:id="@+id/btn_share_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginTop="@dimen/margin_24"
+            android:layout_marginBottom="@dimen/margin_24"
             android:text="@string/btn_share_list"
             android:textColor="@color/colorAccent"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size_16"
             android:textStyle="bold"
             style="@style/Widget.AppCompat.Button.Borderless"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -116,7 +118,7 @@
             android:layout_height="wrap_content"
             android:text="@string/bnt_cancel"
             android:textColor="@color/colorAccent"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size_16"
             android:textStyle="bold"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_marginTop="24dp"

@@ -1,6 +1,5 @@
 package com.example.grocerylist.adapters;
 
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -11,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.grocerylist.R;
 import com.example.grocerylist.util.MyApplication;
+
+import timber.log.Timber;
 
 /**
  *  Helper class to perform click on the RecyclerView
@@ -90,7 +91,7 @@ public class MyTouchListener  implements RecyclerView.OnItemTouchListener {
                 View view = child.findViewById(R.id.ib_share_list);
                 if(view != null && childPosition >=0) {
                     if (e.getRawX() >= view.getLeft()) {
-                        Log.d("MyTouchListener", "Shared button was clicked");
+                        Timber.d( "Shared button was clicked");
                         mOnTouchActionListener.onSharedClicked(childPosition);
                         return true;
                     }

@@ -1,7 +1,6 @@
 package com.example.grocerylist.ui.listItems;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +40,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 import static com.example.grocerylist.util.Constants.DLG_TITLE;
 import static com.example.grocerylist.util.Constants.GL_NAME;
@@ -119,13 +119,13 @@ public class ListItemsFragment
             @Override
             public void onAdFailedToLoad(int i) {
                 super.onAdFailedToLoad(i);
-                Log.d(TAG, "Failed to load ad " + i);
+                Timber.d("Failed to load ad %s", i);
             }
 
             @Override
             public void onAdLoaded() {
                 super.onAdLoaded();
-                Log.d(TAG, "onAdLoaded");
+                Timber.d( "onAdLoaded");
             }
         });
         mAdview.loadAd(adRequest);
@@ -160,7 +160,7 @@ public class ListItemsFragment
      */
     @OnClick(R.id.fab_add_list_item)
     public void onNewItemClicked() {
-        Log.d(TAG, " fab is clicked.");
+        Timber.d( " fab is clicked.");
         Bundle args = new Bundle();
         args.putString(DLG_TITLE, "New Item");
         openDialog(args);
@@ -200,7 +200,7 @@ public class ListItemsFragment
 
         ListItem newListItem = copyListItem(listItem);
 
-        if (position != -1) {   // update
+        if (-1 != position) {   // update
             viewModel.updateItem(newListItem, position);
             // update db
             DatabaseReference ref = FirebaseDatabase
@@ -230,7 +230,7 @@ public class ListItemsFragment
      */
     @Override
     public void onLeftSwipe(int position) {
-        Log.d(TAG, "Left Swipe happened to delete");
+        Timber.d( "Left Swipe happened to delete");
         String parentId = getArguments().getString(GROCERY_LIST_ID, null);
         if (parentId != null) {
             DatabaseReference ref = FirebaseDatabase
@@ -254,7 +254,7 @@ public class ListItemsFragment
      */
     @Override
     public void onRightSwipe(int position) {
-        Log.d(TAG, "Right Swipe happened to edit item");
+        Timber.d("Right Swipe happened to edit item");
         ListItem toUpdateItem = viewModel.getItemsList().getValue().get(position);
         recyclerView.getAdapter().notifyItemChanged(position);
         if(toUpdateItem.isPurchased()){
@@ -280,7 +280,7 @@ public class ListItemsFragment
      */
     @Override
     public void onCheckBoxClicked(ListItem listItem, int position) {
-        Log.d(TAG, "listItem: " + listItem.toString() );
+        Timber.d( "listItem: %s", listItem.toString() );
 
         String gl_id = getArguments().getString(GROCERY_LIST_ID, null);
         if (gl_id != null) {

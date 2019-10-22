@@ -54,6 +54,9 @@ import static com.example.grocerylist.util.Constants.GL_POSITION;
 import static com.example.grocerylist.util.Constants.GROCERY_LIST_ID;
 import static com.example.grocerylist.ui.grocerylist.GroceryListViewModel.listRef;
 
+/**
+ * Grocery List fragment implements the necessary interfaces
+ */
 public class GroceryListFragment
         extends Fragment
         implements NewGroceryListItemDialog.DialogSubmitListener,
@@ -115,9 +118,9 @@ public class GroceryListFragment
         super.onActivityCreated(savedInstanceState);
         LiveData<List<GroceryList>> groceryList = viewModel.getGroceryList();
         groceryList.observe(this, list -> {
-            Log.d(TAG, "onActivityCreated");
+            Timber.d( "onActivityCreated");
             if(list != null && list.size() > 0){
-                Log.d(TAG, "size: " + list.size());
+                Timber.d( "size: " + list.size());
                 mNoItems.setVisibility(View.INVISIBLE);
                 recyclerView.setVisibility(View.VISIBLE);
             } else {
@@ -166,6 +169,9 @@ public class GroceryListFragment
         dialog.show(fm,"add_item_dialog");
     }
 
+    /**
+     * onResume to add the animation to the fab
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -196,7 +202,7 @@ public class GroceryListFragment
             //recyclerView.getAdapter().notifyItemInserted(gList.size()-1);
         }
 
-        Log.d(TAG, "onDialogSubmit " + groceryList.toString());
+        Timber.d( "onDialogSubmit " + groceryList.toString());
 
         User user = UserUtil.getUser();
         if(user != null){
@@ -217,7 +223,7 @@ public class GroceryListFragment
     public void onLeftSwipe(int position) {
         // Deleting
         final GroceryList deletedItem = gList.get(position);
-        Log.d(TAG, "onLeftSwipe: " + position);
+        Timber.d( "onLeftSwipe: " + position);
         DatabaseReference deletedRef = FirebaseDatabase.getInstance().getReference(UserUtil.getUser().getId()+"/my_list/"+deletedItem.getId());
         deletedRef.removeValue();
 
@@ -226,7 +232,7 @@ public class GroceryListFragment
             DatabaseReference reAddRef = FirebaseDatabase.getInstance().getReference(UserUtil.getUser().getId()+"/my_list/"+deletedItem.getId());
             deletedItem.setId(null);
             reAddRef.setValue(deletedItem);
-            Log.d(TAG, "re adding item");
+            Timber.d( "re adding item");
         });
         snackbar.show();
     }
@@ -238,7 +244,7 @@ public class GroceryListFragment
     @Override
     public void onRightSwipe(int position) {
         // Editing
-        Log.d(TAG, "onRightSwipe " + position);
+        Timber.d( "onRightSwipe " + position);
         GroceryList editItem = gList.get(position);
 
         Bundle args = new Bundle();
@@ -259,7 +265,7 @@ public class GroceryListFragment
      */
     @Override
     public void onClick(int position) {
-        Log.d(TAG, "onClick " + position);
+        Timber.d( "onClick " + position);
         Bundle bundle = new Bundle();
         bundle.putString(GROCERY_LIST_ID,gList.get(position).getId());
         bundle.putString(GL_NAME,gList.get(position).getListName());
@@ -272,7 +278,7 @@ public class GroceryListFragment
      */
     @Override
     public void onSharedClicked(int position) {
-        Log.d(TAG, "shared icon clicked at position: " + position);
+        Timber.d( "shared icon clicked at position: " + position);
         Bundle bundle = new Bundle();
         bundle.putString(GROCERY_LIST_ID,gList.get(position).getId());
         bundle.putString(GL_NAME,gList.get(position).getListName());

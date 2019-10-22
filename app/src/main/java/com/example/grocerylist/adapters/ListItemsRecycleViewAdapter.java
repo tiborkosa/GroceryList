@@ -1,6 +1,5 @@
 package com.example.grocerylist.adapters;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 /**
  * Recycler view adapter for displaying the list items
@@ -66,7 +66,7 @@ public class ListItemsRecycleViewAdapter extends RecyclerView.Adapter<ListItemsR
     @NonNull
     @Override
     public ListItemsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.d(TAG,"onCreateViewHolder");
+        Timber.d("onCreateViewHolder");
         View view = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.rv_list_items, parent, false);

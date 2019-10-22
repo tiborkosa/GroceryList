@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:maxWidth="300dp"
-    android:padding="16dp" >
+    android:maxWidth="@dimen/dialog_max_width"
+    android:padding="@dimen/padding16">
 
     <EditText
         android:id="@+id/tv_dlg_item_name"
@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         android:hint="@string/list_item_hint"
         android:theme="@style/EditText"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="@dimen/margin_8"
+        android:layout_marginBottom="@dimen/margin_8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:importantForAutofill="no"
@@ -23,9 +23,9 @@
 
     <EditText
         android:id="@+id/tv_dialog_qty"
-        android:layout_width="100dp"
+        android:layout_width="@dimen/width_100"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/margin_8"
         android:ems="10"
         android:hint="@string/quantity"
         android:importantForAutofill="no"
@@ -40,9 +40,8 @@
         android:id="@+id/spinner_dlg_unit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:dropDownWidth="150dp"
+        android:layout_marginStart="@dimen/margin_8"
+        android:dropDownWidth="@dimen/spinner_dropdown_width"
         android:entries="@array/unit_measure_imperial"
         android:theme="@style/EditTextListItem"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +58,7 @@
         android:backgroundTint="@color/colorPrimary"
         android:textColor="@color/white"
         android:text="@string/btn_add"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/padding_16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner_dlg_unit" />
 
@@ -72,7 +71,7 @@
         android:backgroundTint="@color/colorPrimary"
         android:textColor="@color/white"
         android:text="@string/bnt_cancel"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="@dimen/padding_16"
         app:layout_constraintEnd_toStartOf="@+id/btn_dlg_add"
         app:layout_constraintTop_toTopOf="@+id/btn_dlg_add" />
 

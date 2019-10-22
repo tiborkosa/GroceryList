@@ -108,12 +108,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         userViewModel.getUser().observe(this, user -> {
-            Timber.d("Logged user is:" + user.toString());
+            Timber.d("Logged user is:%s", user.toString());
             updateNavigationUser(user);
         });
 
     }
 
+    /**
+     * update the user info in the navigation drawer
+     * @param user
+     */
     private void updateNavigationUser(User user) {
         NavigationView navigation = findViewById(R.id.nav_view);
         View headerView = navigation.getHeaderView(0);
@@ -158,10 +162,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    /**
+     * when the user logged in
+     * @param requestCode if user sign in was success
+     * @param resultCode if the logging in was ok
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Timber.d( "this is the requestCode: " + requestCode);
+        Timber.d( "this is the requestCode: %s", requestCode);
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -194,6 +204,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    /**
+     * setting up the navigation controller
+     * @return
+     */
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -201,6 +215,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 || super.onSupportNavigateUp();
     }
 
+    /**
+     * drawer navigation item clicked
+     * @param menuItem was clicked
+     * @return
+     */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
@@ -241,6 +260,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    /**
+     * helper function to copy the data to the newly logged in user
+     * originally is stored under timestamp data
+     * @param userIdFrom old user
+     * @param userIdTo new user (logged in user)
+     */
     private void copyExistingData(String userIdFrom, final String userIdTo){
         DatabaseReference dReferenceFrom = mFirebaseDatabase.getReference(userIdFrom+ "/my_list");
 

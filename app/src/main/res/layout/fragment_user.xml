@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/iv_user_pic"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="@dimen/profile_image_wh"
+        android:layout_height="@dimen/profile_image_wh"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,10 +21,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/user_name"
-        android:layout_marginTop="42dp"
+        android:layout_marginTop="@dimen/profile_name_margin_top"
         android:textStyle="bold"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_size_20"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_user_pic" />
 
@@ -33,20 +33,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="20sp"
-        android:layout_marginLeft="24dp"
+        android:textSize="@dimen/text_size_20"
+        android:layout_marginLeft="@dimen/margin24"
         app:layout_constraintStart_toEndOf="@+id/tv_profile_user_label"
-        app:layout_constraintTop_toTopOf="@+id/tv_profile_user_label" />
+        app:layout_constraintTop_toTopOf="@+id/tv_profile_user_label"
+        android:layout_marginStart="@dimen/margin24" />
 
     <TextView
         android:id="@+id/tv_profile_email_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Email"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/margin_16"
         android:textStyle="bold"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_size_20"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_profile_user_label" />
 
@@ -55,11 +56,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="20sp"
-        android:layout_marginLeft="24dp"
+        android:textSize="@dimen/text_size_20"
+        android:layout_marginLeft="@dimen/margin24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_profile_email_label"
-        app:layout_constraintTop_toTopOf="@+id/tv_profile_email_label" />
+        app:layout_constraintTop_toTopOf="@+id/tv_profile_email_label"
+        android:layout_marginStart="@dimen/margin24" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

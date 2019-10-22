@@ -1,7 +1,6 @@
 package com.example.grocerylist.ui.dialogs;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +22,7 @@ import com.google.android.material.snackbar.Snackbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 import static com.example.grocerylist.util.Constants.DLG_TITLE;
 import static com.example.grocerylist.util.Constants.ITEM_ID;
@@ -111,9 +111,6 @@ public class NewListItemDialog extends DialogFragment {
             mQuantity.setText(String.valueOf(q));
         mMeasureUnit.setSelection(getArguments().getInt(ITEM_UNIT_OF_MEASURE,0));
 
-        if(getArguments().containsKey(ITEM_POSITION)){
-            mSubmit.setText("Edit");
-        }
     }
 
     /**
@@ -130,7 +127,7 @@ public class NewListItemDialog extends DialogFragment {
         try{
             m = Double.parseDouble(quantity);
         } catch (Exception e){
-            Log.e("RR", "error parsing " + e.getMessage());
+            Timber.e( "error parsing " + e.getMessage());
             return;
         }
 

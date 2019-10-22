@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +37,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 import static com.example.grocerylist.util.Constants.GL_CREATE_DATE;
 import static com.example.grocerylist.util.Constants.GL_DUE_DATE;
@@ -157,7 +157,7 @@ public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdap
      * Helper function to update the view
      */
     private void updateRecyclerView(){
-        Log.d(TAG,"updateRecyclerView");
+        Timber.d( "updateRecyclerView");
         adapter = new ShareEmailRecycleViewAdapter(shareEmailList, this);
         mRecyclerView.setAdapter(adapter);
     }
@@ -168,7 +168,7 @@ public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdap
      * @return true if valid, false if not
      */
     private boolean isValidEmail(String email) {
-        String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+        String regex = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
         return email.matches(regex);
     }
 
@@ -218,11 +218,11 @@ public class ShareFragment extends Fragment implements ShareEmailRecycleViewAdap
 
         try {
             startActivity(emailIntent);
-            Log.i("Email sent!", "");
+            Timber.i("Email sent!");
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(MyApplication.getAppContext(),
                     "Email not installed.", Toast.LENGTH_SHORT).show();
-            Log.e("sendEmail", ex.getMessage());
+            Timber.d( ex.getMessage());
         }
     }
 

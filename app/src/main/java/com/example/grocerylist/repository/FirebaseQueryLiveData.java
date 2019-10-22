@@ -1,7 +1,6 @@
 package com.example.grocerylist.repository;
 
 import android.os.Handler;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -11,6 +10,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import timber.log.Timber;
 
 /**
  * This is a helper class that reduces the amount of firebase queries
@@ -60,7 +61,7 @@ public class FirebaseQueryLiveData extends LiveData<DataSnapshot> {
     @Override
     protected void onActive() {
         super.onActive();
-        Log.d(TAG, TAG + " [onActive]");
+        Timber.d("%s [onActive]", TAG);
         if (listenerRemovePending) {
             handler.removeCallbacks(removeListener);
         }
@@ -77,7 +78,7 @@ public class FirebaseQueryLiveData extends LiveData<DataSnapshot> {
     @Override
     protected void onInactive() {
         super.onInactive();
-        Log.d(TAG, TAG + " [onInactive]");
+        Timber.d( "%s [onInactive]", TAG);
         handler.postDelayed(removeListener, 2000);
         listenerRemovePending = true;
     }
@@ -102,7 +103,7 @@ public class FirebaseQueryLiveData extends LiveData<DataSnapshot> {
          */
         @Override
         public void onCancelled(@NonNull DatabaseError databaseError) {
-            Log.d(TAG, "Could not listened to query: " + databaseError.getMessage());
+            Timber.d( "Could not listened to query: %s", databaseError.getMessage());
         }
     }
 }

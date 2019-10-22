@@ -5,9 +5,17 @@ import com.example.grocerylist.entities.GroceryList;
 import com.example.grocerylist.entities.ListItem;
 import com.google.firebase.database.DataSnapshot;
 
+/**
+ * To build the email body
+ */
 public class EmailUtil {
 
-
+    /**
+     * build email body
+     * @param groceryList that will be shared
+     * @param dataSnapshot of the grocery list items from the db
+     * @return string value of the parsed data
+     */
     public static String buildContent(GroceryList groceryList, DataSnapshot dataSnapshot){
         StringBuilder sb = new StringBuilder();
         sb.append("Grocery list: "+groceryList.getListName());
@@ -26,6 +34,10 @@ public class EmailUtil {
         return sb.toString();
     }
 
+    /**
+     * getting system line separator
+     * @return
+     */
     private static String getLineSeparator(){
         return System.getProperty("line.separator");
     }
