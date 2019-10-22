@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Grocery List</string>
 
-    <string name="facebook_application_id" translatable="false">727413587706249</string>
-    <string name="fb_login_protocol_scheme" translatable="false">fb727413587706249</string>
+    <string name="facebook_application_id" translatable="false">Add your own</string>
+    <string name="fb_login_protocol_scheme" translatable="false">Add your own</string>
     <string name="title_activity_main_grocery">Groceries</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
